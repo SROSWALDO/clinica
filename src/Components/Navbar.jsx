@@ -14,7 +14,7 @@ export default function Navbar() {
     </div>
 
     <div>
-      <Image onClick={handleSidebar} className='w-[45px]' src={menu} alt='menu' />
+      <Image  className='w-[45px]' src={menu} alt='menu' />
     </div>
 
     
