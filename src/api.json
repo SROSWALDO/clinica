@@ -1,0 +1,123 @@
+[
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "08:30",
+      "Nombre": "Juan Pérez",
+      "Telefono": 5551234,
+      "Consulta": "Dolor abdominal",
+      "Doctor": "Dra. Martínez",
+      "Radiografias": 0,
+      "Ambulancia": "No",
+      "Ingresos": 500,
+      "Egresos": 50
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "09:00",
+      "Nombre": "María López",
+      "Telefono": 5555678,
+      "Consulta": "Tos persistente",
+      "Doctor": "Dr. Gómez",
+      "Radiografias": 2,
+      "Ambulancia": "No",
+      "Ingresos": 700,
+      "Egresos": 60
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "09:45",
+      "Nombre": "Carlos Mendoza",
+      "Telefono": 5559101,
+      "Consulta": "Dolor de espalda",
+      "Doctor": "Dr. Pérez",
+      "Radiografias": 1,
+      "Ambulancia": "No",
+      "Ingresos": 1200,
+      "Egresos": 80
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "10:15",
+      "Nombre": "Laura Sánchez",
+      "Telefono": 5552345,
+      "Consulta": "Dolor de cabeza",
+      "Doctor": "Dra. Torres",
+      "Radiografias": 0,
+      "Ambulancia": "No",
+      "Ingresos": 900,
+      "Egresos": 55
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "10:50",
+      "Nombre": "Luis Ramírez",
+      "Telefono": 5556789,
+      "Consulta": "Lesión en la pierna",
+      "Doctor": "Dr. Martínez",
+      "Radiografias": 3,
+      "Ambulancia": "Sí",
+      "Ingresos": 1500,
+      "Egresos": 90
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "11:20",
+      "Nombre": "Ana Castillo",
+      "Telefono": 5551122,
+      "Consulta": "Alergia",
+      "Doctor": "Dra. Fernández",
+      "Radiografias": 0,
+      "Ambulancia": "No",
+      "Ingresos": 400,
+      "Egresos": 30
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "11:50",
+      "Nombre": "Pedro García",
+      "Telefono": 5553344,
+      "Consulta": "Fractura de brazo",
+      "Doctor": "Dr. Ruiz",
+      "Radiografias": 2,
+      "Ambulancia": "Sí",
+      "Ingresos": 2000,
+      "Egresos": 120
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "12:15",
+      "Nombre": "Sofía Romero",
+      "Telefono": 5555566,
+      "Consulta": "Problemas respiratorios",
+      "Doctor": "Dra. Méndez",
+      "Radiografias": 0,
+      "Ambulancia": "No",
+      "Ingresos": 1300,
+      "Egresos": 85
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "12:45",
+      "Nombre": "Miguel Torres",
+      "Telefono": 5557788,
+      "Consulta": "Dolor en el pecho",
+      "Doctor": "Dr. Rodríguez",
+      "Radiografias": 1,
+      "Ambulancia": "Sí",
+      "Ingresos": 2500,
+      "Egresos": 150
+    },
+    {
+      "Fecha": "2024-09-11",
+      "Hora": "13:10",
+      "Nombre": "Elena Vargas",
+      "Telefono": 5559900,
+      "Consulta": "Mareos",
+      "Doctor": "Dra. López",
+      "Radiografias": 0,
+      "Ambulancia": "No",
+      "Ingresos": 600,
+      "Egresos": 40
+    }
+  ]
+  
