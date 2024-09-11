@@ -13,6 +13,42 @@
   .ant-pagination-item-active a {
     color: white !important; /* Cambia el color del texto si es necesario */
   }
+
+  
+    .floating-label {
+      position: relative;
+    }
+    .floating-label input, .floating-label textarea, .floating-label select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      background: transparent;
+    }
+    .floating-label label {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      color: #666;
+      background: white;
+      padding: 0 5px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      transform: translateY(-50%);
+    }
+    .floating-label input:focus ~ label,
+    .floating-label input:not(:placeholder-shown) ~ label,
+    .floating-label textarea:focus ~ label,
+    .floating-label textarea:not(:placeholder-shown) ~ label,
+    .floating-label select:focus ~ label,
+    .floating-label select:not([value=""]) ~ label {
+      top: 0;
+      left: 10px;
+      color: #3b82f6; /* Color azul de foco */
+      font-size: 0.75rem;
+    }
+  
   
 
 

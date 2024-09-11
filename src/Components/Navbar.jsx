@@ -5,7 +5,7 @@ import menu from '../assets/menu.png'
 import Image from 'next/image';
 import Sidebar from './Sidebar';
 
-export default function Navbar() {
+export default function Navbar({ handleSide }) {
 
   return (
     <div className='w-full flex justify-between shadow-md items-center px-5 ' >
@@ -14,7 +14,7 @@ export default function Navbar() {
     </div>
 
     <div>
-      <Image  className='w-[45px]' src={menu} alt='menu' />
+      <Image onClick={handleSide} className='w-[45px] cursor-pointer hover:scale-105 transition-all ' src={menu} alt='menu' />
     </div>
 
     

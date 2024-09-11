@@ -6,10 +6,18 @@ import { useState } from "react";
 import Formulario from "@/Components/Formulario";
 import data from '../api.json'
 import { Pagination } from "antd";
+import Navbar from "@/Components/Navbar";
+import Sidebar from "@/Components/Sidebar";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pacientes, setPacientes] = useState(data);
+
+  const [isSideOpen, setIsSideOpen] = useState(false)
+
+  const handleSide = () => {
+    setIsSideOpen(!isSideOpen)
+  }
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
@@ -30,6 +38,13 @@ export default function Home() {
 
   return (
     <div className="font-poppins">
+    {isSideOpen && (
+      <Sidebar handleSide={handleSide} />
+    )}
+    <Navbar handleSide={handleSide} />
+
+    
+
       <div className="mt-5 ml-10">
         {isModalOpen && (
           <Formulario id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} />
