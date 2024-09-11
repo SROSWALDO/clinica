@@ -32,7 +32,7 @@ export default function Home() {
     <div className="font-poppins">
       <div className="mt-5 ml-10">
         {isModalOpen && (
-          <Formulario id="default-modal" onClose={handleCloseModal} />
+          <Formulario id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} />
         )}
         <button
           type="button"
