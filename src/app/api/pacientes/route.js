@@ -16,22 +16,25 @@ export async function POST(request) {
     const fechaDate = new Date(fecha);
     fechaDate.setHours(0, 0, 0, 0); // Establece la hora a medianoche
 
-    // Convierte la hora a formato Date si es necesario
-    const horaDate = new Date(`1970-01-01T${hora}Z`);
+    const radiografiasInt = parseInt(radiografias, 10);
+    const ingresosInt = parseInt(ingresos, 10);
+    const egresosInt = parseInt(egresos,10);
+
+    const ambulanciaBool = ambulancia.toLowerCase() === 'si';
 
     // Crea el nuevo paciente en la base de datos
     const newPaciente = await prisma.paciente.create({
         data: {
             fecha: fechaDate,
-            hora: horaDate,
+            hora,
             nombre,
             telefono,
             consulta,
             doctor,
-            radiografias,
-            ambulancia,
-            ingresos,
-            egresos
+            radiografias: radiografiasInt,
+            ambulancia: ambulanciaBool,
+            ingresos:ingresosInt,
+            egresos: egresosInt,
         }
     });
 

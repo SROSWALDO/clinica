@@ -1,12 +1,56 @@
 import { Modal } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
-export default function Formulario({ isModalOpen, onClose }) {
+export default function Formulario({ isModalOpen, onClose, onAddPaciente }) {
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const [formData, setFormData] = useState({
+    Fecha: '',
+    Hora: '',
+    Nombre: '',
+    Telefono: '',
+    Consulta: '',
+    Doctor: '',
+    Radiografias: '',
+    Ambulancia: '',
+    Ingresos: '',
+    Egresos: ''
+  });
 
-  }
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Hacer solicitud POST a la API
+      const response = await fetch('/api/pacientes', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Llamar a la función pasada como prop para actualizar la tabla
+        onAddPaciente(formData);
+
+        // Cerrar el modal
+        onClose();
+      } else {
+        console.error('Error al enviar los datos:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
 
   return (
     <div>
@@ -24,6 +68,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="date"
                 id="fecha"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -35,6 +80,8 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="time"
                 id="hora"
+                name="hora"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -46,6 +93,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="text"
                 id="nombre"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -57,6 +105,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="tel"
                 id="telefono"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -68,6 +117,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="text"
                 id="consulta"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -79,6 +129,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="text"
                 id="doctor"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -90,6 +141,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="number"
                 id="radiografias"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -100,6 +152,7 @@ export default function Formulario({ isModalOpen, onClose }) {
             <div className="mb-4 floating-label">
               <select
                 id="ambulancia"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               >
@@ -115,6 +168,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="number"
                 id="ingresos"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -126,6 +180,7 @@ export default function Formulario({ isModalOpen, onClose }) {
               <input
                 type="number"
                 id="egresos"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />

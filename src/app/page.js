@@ -36,6 +36,10 @@ export default function Home() {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
+  const agregarPaciente = (nuevoPaciente) => {
+    setPacientes(prevPacientes => [...prevPacientes, nuevoPaciente]);
+  };
+
   return (
     <div className="font-poppins">
     
@@ -47,7 +51,7 @@ export default function Home() {
 
       <div className="mt-5 ml-10">
         {isModalOpen && (
-          <Formulario id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} />
+          <Formulario id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} onAddPaciente={agregarPaciente} />
         )}
         <button
           type="button"
