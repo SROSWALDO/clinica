@@ -10,7 +10,7 @@ export default function Formulario({ isModalOpen, onClose }) {
         width={800} // Aumenta el ancho del modal
         footer={null}
       >
-        <form className="bg-white p-8 rounded-lg shadow-lg w-full">
+        <form className="bg-white p-8 rounded-lg  w-full">
           {/* Organiza los campos usando grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Fecha */}

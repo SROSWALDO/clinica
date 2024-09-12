@@ -48,7 +48,54 @@
       color: #3b82f6; /* Color azul de foco */
       font-size: 0.75rem;
     }
-  
+    
+    .sider:hover {
+      color: #3f5efb;
+      background: #fff;
+      outline: none;
+      position: relative;
+      background-color: #fff;
+     
+    }
+    
+    
+    .sider:hover::after {
+      content: "";
+      position: absolute;
+      background-color: transparent;
+      bottom: 100%;
+      left: 0;
+      height: 35px;
+      width: 35px;
+      border-bottom-left-radius: 18px;
+      box-shadow: 0 20px 0 0 #fff;
+    }
+    
+    .sider:hover::before {
+      content: "";
+      position: absolute;
+      background-color: transparent;
+      top: 38px;
+      left: 0;
+      height: 35px;
+      width: 35px;
+      border-top-left-radius: 18px;
+      box-shadow: 0 -20px 0 0 #fff;
+    }
+
+    .sider {
+      color: white;
+      display: flex;
+      padding: 12px;
+      padding-left: 30px;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      
+    }
+
+    
+
+
   
 
 

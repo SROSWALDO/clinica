@@ -38,9 +38,9 @@ export default function Home() {
 
   return (
     <div className="font-poppins">
-    {isSideOpen && (
-      <Sidebar handleSide={handleSide} />
-    )}
+    
+    <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
+    
     <Navbar handleSide={handleSide} />
 
     
