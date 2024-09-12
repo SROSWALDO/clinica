@@ -2,16 +2,15 @@
 import Image from "next/image";
 import more from "../assets/new.png";
 import edit from "../assets/edit.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Formulario from "@/Components/Formulario";
-import data from '../api.json'
 import { Pagination } from "antd";
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pacientes, setPacientes] = useState(data);
+  const [pacientes, setPacientes] = useState([]);
 
   const [isSideOpen, setIsSideOpen] = useState(false)
 
@@ -39,6 +38,20 @@ export default function Home() {
   const agregarPaciente = (nuevoPaciente) => {
     setPacientes(prevPacientes => [...prevPacientes, nuevoPaciente]);
   };
+
+  useEffect(() => {
+    const fetchPacientes = async () => {
+      try {
+        const response = await fetch('/api/pacientes');
+        const data = await response.json();
+        setPacientes(data);
+      } catch (error) {
+        console.error('Error fetching pacientes:', error);
+      }
+    };
+  
+    fetchPacientes();
+  }, []);
 
   return (
     <div className="font-poppins">
@@ -108,17 +121,17 @@ export default function Home() {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  <p>{paciente.Fecha}</p>
-                  <p>{paciente.Hora}</p>
+                  <p>{paciente.fecha}</p>
+                  <p>{paciente.hora}</p>
                 </th>
-                <td className="px-6 py-4">{paciente.Nombre}</td>
-                <td className="px-6 py-4">{paciente.Telefono}</td>
-                <td className="px-6 py-4">{paciente.Consulta}</td>
-                <td className="px-6 py-4">{paciente.Doctor}</td>
-                <td className="px-6 py-4 text-center">{paciente.Radiografias}</td>
-                <td className="px-6 py-4 text-center ">{paciente.Ambulancia}</td>
-                <td className="px-6 py-4">${paciente.Ingresos}</td>
-                <td className="px-6 py-4">${paciente.Egresos}</td>
+                <td className="px-6 py-4">{paciente.nombre}</td>
+                <td className="px-6 py-4">{paciente.telefono}</td>
+                <td className="px-6 py-4">{paciente.consulta}</td>
+                <td className="px-6 py-4">{paciente.doctor}</td>
+                <td className="px-6 py-4 text-center">{paciente.radiografias}</td>
+                <td className="px-6 py-4 text-center ">{paciente.ambulancia}</td>
+                <td className="px-6 py-4">${paciente.ingresos}</td>
+                <td className="px-6 py-4">${paciente.egresos}</td>
                 <td className="px-6 py-4">
                   <Image
                     className="w-[30px] m-auto"
