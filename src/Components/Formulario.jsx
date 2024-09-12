@@ -2,6 +2,12 @@ import { Modal } from "antd";
 import React from "react";
 
 export default function Formulario({ isModalOpen, onClose }) {
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+  }
+
   return (
     <div>
       <Modal
@@ -10,7 +16,7 @@ export default function Formulario({ isModalOpen, onClose }) {
         width={800} // Aumenta el ancho del modal
         footer={null}
       >
-        <form className="bg-white p-8 rounded-lg  w-full">
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg  w-full">
           {/* Organiza los campos usando grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Fecha */}
