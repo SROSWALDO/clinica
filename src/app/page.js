@@ -32,6 +32,27 @@ export default function Home() {
     setPacientes(prevPacientes => [...prevPacientes, nuevoPaciente]);
   };
 
+  const deletePaciente = async (id) => {
+    try {
+      // Realiza una petición DELETE al endpoint con el ID del paciente
+      const response = await fetch(`/api/pacientes/${id}`, {
+        method: 'DELETE', // Usa el método DELETE
+      });
+  
+      // Verifica si la respuesta fue exitosa
+      if (response.ok) {
+        // Elimina el paciente del estado local si la petición fue exitosa
+        setPacientes(pacientes.filter(paciente => paciente.id !== id));
+      } else {
+        // Si el servidor devuelve un error, muestra un mensaje
+        console.log("Error al eliminar el paciente.");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
+
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
@@ -154,6 +175,7 @@ export default function Home() {
                     alt="edit"
                   />
                   <Image
+                  onClick={() => deletePaciente(paciente.id)}
                   className="w-[30px] cursor-pointer"
                     src={trash}
                     alt="trash"
