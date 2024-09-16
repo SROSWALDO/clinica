@@ -7,26 +7,19 @@ import Formulario from "@/Components/Formulario";
 import { Pagination } from "antd";
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
+import trash from '@/assets/trash.svg'
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pacientes, setPacientes] = useState([]);
-
-  const [isSideOpen, setIsSideOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [isSideOpen, setIsSideOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
 
   const handleSide = () => {
     setIsSideOpen(!isSideOpen)
   }
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
-
-  const startIndex = (currentPage - 1) * pageSize; //0
-  const endIndex = startIndex + pageSize; //6
-  const currentTasks = pacientes.slice(startIndex, endIndex);
-
-  //Para la página 1, slice(0, 6) devuelve: [0, 1, 2, 3, 4, 5].
-  //Para la página 2, slice(6, 12) devuelve: [6, 7, 8, 9, 10, 11].
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -53,6 +46,17 @@ export default function Home() {
     fetchPacientes();
   }, []);
 
+  const filteredPacientes = pacientes.filter((paciente) => 
+    paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const startIndex = (currentPage - 1) * pageSize; //0
+  const endIndex = startIndex + pageSize; //6
+  const currentTasks = filteredPacientes.slice(startIndex, endIndex);
+
+  //Para la página 1, slice(0, 6) devuelve: [0, 1, 2, 3, 4, 5].
+  //Para la página 2, slice(6, 12) devuelve: [6, 7, 8, 9, 10, 11].
+
   return (
     <div className="font-poppins">
     
@@ -62,6 +66,7 @@ export default function Home() {
 
     
 
+      <div className="flex justify-between items-center">
       <div className="mt-5 ml-10">
         {isModalOpen && (
           <Formulario id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} onAddPaciente={agregarPaciente} />
@@ -76,7 +81,17 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="mt-10 w-[1500px] m-auto ">
+      <div>
+        <input
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+         className="mt-5 mr-6 rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400  " type="text" placeholder="Buscar..." />
+        
+      </div>
+
+      </div>
+
+      <div className="mt-5 w-[1500px] m-auto ">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
             <thead className="text-xs text-white uppercase font-poppins bg-blue-500">
@@ -121,7 +136,7 @@ export default function Home() {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  <p>{paciente.fecha}</p>
+                  <p>{new Date(paciente.fecha).toLocaleDateString('es-ES')}</p>
                   <p>{paciente.hora}</p>
                 </th>
                 <td className="px-6 py-4">{paciente.nombre}</td>
@@ -129,14 +144,19 @@ export default function Home() {
                 <td className="px-6 py-4">{paciente.consulta}</td>
                 <td className="px-6 py-4">{paciente.doctor}</td>
                 <td className="px-6 py-4 text-center">{paciente.radiografias}</td>
-                <td className="px-6 py-4 text-center ">{paciente.ambulancia}</td>
+                <td className="px-6 py-4 text-center ">{paciente.ambulancia  ? "Si" : "No" }</td>
                 <td className="px-6 py-4">${paciente.ingresos}</td>
                 <td className="px-6 py-4">${paciente.egresos}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex">
                   <Image
-                    className="w-[30px] m-auto"
+                    className="w-[30px] m-auto cursor-pointer "
                     src={edit}
                     alt="edit"
+                  />
+                  <Image
+                  className="w-[30px] cursor-pointer"
+                    src={trash}
+                    alt="trash"
                   />
                 </td>
               </tr>
@@ -149,7 +169,7 @@ export default function Home() {
           </table>
         </div>
 
-        {pacientes.length > pageSize && (
+        {filteredPacientes.length > pageSize && (
           <Pagination
           className="flex justify-center mt-4"
           current={currentPage}

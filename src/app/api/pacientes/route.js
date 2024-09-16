@@ -1,13 +1,29 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export async function GET(request) {
+    // Obtener los parámetros de la URL (query params)
+    const { searchParams } = new URL(request.url);
+    const nombre = searchParams.get("nombre"); // Obtiene el nombre desde la query string
 
-export async function GET() {
+    // Si hay un nombre, buscar los pacientes que coincidan
+    if (nombre) {
+        const pacientes = await prisma.paciente.findMany({
+            where: {
+                nombre: {
+                    contains: nombre.toLowerCase(), 
+                },
+            },
+        });
+
+        return NextResponse.json(pacientes);
+    }
+
+    // Si no hay un parámetro de nombre, devolver todos los pacientes
     const pacientes = await prisma.paciente.findMany();
-    console.log(pacientes);
-    
-    return NextResponse.json(pacientes)
+    return NextResponse.json(pacientes);
 }
+
 
 export async function POST(request) {
     const { fecha, hora, nombre, telefono, consulta, doctor, radiografias, ambulancia, ingresos, egresos } = await request.json();
@@ -40,3 +56,4 @@ export async function POST(request) {
 
     return NextResponse.json(newPaciente);
 }
+
