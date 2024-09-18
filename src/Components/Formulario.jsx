@@ -57,7 +57,7 @@ export default function Formulario({ isModalOpen, onClose, onAddPaciente }) {
       <Modal
         open={isModalOpen}
         onCancel={onClose}
-        width={800} // Aumenta el ancho del modal
+        width={800}
         footer={null}
       >
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg  w-full">

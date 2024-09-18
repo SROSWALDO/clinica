@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import x from "@/assets/x.svg";
 import Image from "next/image";
 import logo from '@/assets/logoside.png'
+import Link from "next/link";
 
 
 export default function Sidebar({ handleSide, isSideOpen }) {
@@ -40,6 +41,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
         </div>
 
         <div className="mt-8">
+          <Link href="/" >
           <div className="sider flex h-[40px] cursor-pointer items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +55,9 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </svg>
             <p className="ml-2">Home</p>
           </div>
+          </Link>
 
+          <Link href="/patologia" >
           <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +71,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </svg>
             <p className="ml-2">Patologia</p>
           </div>
+          </Link>
 
           <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
             <svg

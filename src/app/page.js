@@ -16,6 +16,7 @@ export default function Home() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
+  const [paciente, setPaciente] = useState([]);
 
   const handleSide = () => {
     setIsSideOpen(!isSideOpen)
@@ -51,6 +52,17 @@ export default function Home() {
       console.log(error.message);
     }
   };
+
+  const updatePaciente = async (id) => {
+    try {
+      const response = await fetch(`/api/pacientes/${id}`);
+      const data = await response.json();
+      setPaciente(data)
+      console.log(paciente)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   
 
   useEffect(() => {
@@ -171,6 +183,7 @@ export default function Home() {
                 <td className="px-6 py-4 flex">
                   <Image
                     className="w-[30px] m-auto cursor-pointer "
+                    onClick={() => updatePaciente(paciente.id)}
                     src={edit}
                     alt="edit"
                   />
