@@ -25,3 +25,12 @@ model Paciente {
   egresos Int
   createdAt DateTime @default(now())
 }
+
+model Corte {
+  id Int @id @default(autoincrement())
+  nombre String
+  ingresos Float
+  egresos Float
+  total Float
+  createdAt DateTime @default(now())
+}
