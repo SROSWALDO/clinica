@@ -29,8 +29,8 @@ model Paciente {
 model Corte {
   id Int @id @default(autoincrement())
   nombre String
-  ingresos Float
-  egresos Float
+  ingresos String
+  egresos String
   total Float
   createdAt DateTime @default(now())
 }

@@ -13,6 +13,7 @@ export async function GET(request, {params}) {
 
 export async function PUT(request, { params }) {
     const data = await request.json();
+    
 
     // Convierte la fecha a formato ISO para la base de datos
     const fechaISO = new Date(data.fecha).toISOString();
@@ -21,7 +22,8 @@ export async function PUT(request, { params }) {
     const hora = data.hora; // Aquí guardamos la hora como cadena
 
     // Convierte el valor de ambulancia a booleano
-    const ambulancia = data.ambulancia === 'Sí'; // Asume que 'Sí' es el valor verdadero, de lo contrario, ajusta la lógica
+    const ambulancia = data.ambulancia === true || data.ambulancia === 'true'; // Asume que 'true' es el valor verdadero, de lo contrario, ajusta la lógica
+    
 
     try {
         const pacienteUpdated = await prisma.paciente.update({

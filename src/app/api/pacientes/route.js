@@ -36,7 +36,8 @@ export async function POST(request) {
     const ingresosInt = parseInt(ingresos, 10);
     const egresosInt = parseInt(egresos,10);
 
-    const ambulanciaBool = ambulancia.toLowerCase() === 'si';
+    const ambulanciaBool = ambulancia === "true";
+   
 
     // Crea el nuevo paciente en la base de datos
     const newPaciente = await prisma.paciente.create({

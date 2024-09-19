@@ -28,6 +28,7 @@ export default function Home() {
   const [totalEgresos, setTotalEgresos] = useState(0);
   const [totalCorte, setTotalCorte] = useState(0);
   const [isCorteOpen, setIsCorteOpen] = useState(false);
+  const [corteNombre, setCorteNombre] = useState("");
 
   const handleSide = () => {
     setIsSideOpen(!isSideOpen);
@@ -37,32 +38,39 @@ export default function Home() {
     setCurrentPage(page);
   };
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = () => {
+    // Reinicia el estado paciente antes de abrir el modal
+    setPaciente(null);
+    setIsModalOpen(true);
+  };
+  
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleOpenCorte = () => setIsCorteOpen(true);
   const handleCloseCorte = () => setIsCorteOpen(false);
 
   const agregarPaciente = (nuevoPaciente) => {
-    console.log("Nuevo Paciente:", nuevoPaciente); // Verifica el paciente recibido
   
+
     if (!nuevoPaciente || !nuevoPaciente.nombre) {
       toast.error("Error: El nombre del paciente es requerido.");
       return;
     }
-  
+
     const primerNombre = nuevoPaciente.nombre.split(" ")[0];
-  
+
     let mensaje; // Define la variable mensaje aquí
-  
+
     setPacientes((prevPacientes) => {
       // Verificar si el paciente ya existe en la lista
-      const pacienteExistente = prevPacientes.find(p => p.id === nuevoPaciente.id);
-  
+      const pacienteExistente = prevPacientes.find(
+        (p) => p.id === nuevoPaciente.id
+      );
+
       if (pacienteExistente) {
         // Si existe, actualizar los datos del paciente en la lista
         mensaje = `Paciente ${primerNombre} actualizado!!`; // Asigna el mensaje aquí
-        return prevPacientes.map(p =>
+        return prevPacientes.map((p) =>
           p.id === nuevoPaciente.id ? nuevoPaciente : p
         );
       } else {
@@ -71,16 +79,10 @@ export default function Home() {
         return [...prevPacientes, nuevoPaciente];
       }
     });
-  
+
     // Mostrar el mensaje de éxito usando la información correcta
     toast.success(mensaje);
   };
-  
-  
-  
-  
-  
-
 
   const deletePaciente = async (id) => {
     try {
@@ -108,7 +110,7 @@ export default function Home() {
       const response = await fetch(`/api/pacientes/${id}`);
       const data = await response.json();
       setPaciente(data);
-      setIsModalOpen(true)
+      setIsModalOpen(true);
       console.log(paciente);
     } catch (error) {
       console.log(error.message);
@@ -151,20 +153,39 @@ export default function Home() {
       0
     );
     const total = totalIngresos - totalEgresos;
-    setIngresos(ingresos)
-    setEgresos(egresos)
+
+    setIngresos(ingresos);
+    setEgresos(egresos);
     setTotalIngresos(totalIngresos);
     setTotalEgresos(totalEgresos);
     setTotalCorte(total);
 
-    setIsCorteOpen(true);
-
+    // Enviar el nuevo corte al backend
     try {
-      const response = await fetch("/api/pacientes", {
+      const response = await fetch("/api/cortes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre: corteNombre, // Puedes ajustar el nombre según sea necesario
+          ingresos: JSON.stringify(ingresos),
+          egresos: JSON.stringify(egresos),
+          total: totalCorte,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Error al crear el corte");
+        return;
+      }
+
+      // Eliminar todos los pacientes
+      const deleteResponse = await fetch("/api/pacientes", {
         method: "DELETE",
       });
 
-      if (response.ok) {
+      if (deleteResponse.ok) {
         setPacientes([]);
       } else {
         console.error("Error al eliminar los pacientes");
@@ -172,6 +193,8 @@ export default function Home() {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    setIsCorteOpen(true);
   };
 
   return (
@@ -215,7 +238,14 @@ export default function Home() {
         )}
 
         <div className="flex">
-          <div className="mt-5">
+          <div className="mt-5 flex mr-5">
+            <input
+            value={corteNombre}
+            onChange={(e) => setCorteNombre(e.target.value) }
+              className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center mr-2"
+              type="text"
+              placeholder="Nombre del corte"
+            />
             <button
               onClick={crearCorte}
               className="bg-blue-500 text-white p-2 rounded-lg mr-4 flex hover:bg-blue-600"
