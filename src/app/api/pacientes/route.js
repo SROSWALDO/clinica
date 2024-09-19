@@ -57,3 +57,17 @@ export async function POST(request) {
     return NextResponse.json(newPaciente);
 }
 
+export async function DELETE() {
+    try {
+        // Eliminar todos los pacientes de la tabla
+        await prisma.paciente.deleteMany();
+        
+        // Retornar una respuesta exitosa
+        return NextResponse.json({ message: "Todos los pacientes han sido eliminados" }, { status: 200 });
+    } catch (error) {
+        // Manejo de errores
+        console.error("Error eliminando pacientes:", error);
+        return NextResponse.json({ error: "Error eliminando pacientes" }, { status: 500 });
+    }
+}
+
