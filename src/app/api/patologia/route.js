@@ -6,3 +6,19 @@ export async function GET(request) {
     return NextResponse.json(patologias)
     
 }
+
+export async function POST(request) {
+    const {fecha, nombre, telefono, pieza, costo, recibido} = await request.json();
+
+    const newPatology = await prisma.patologia.create({
+        data: {
+            fecha,
+            nombre,
+            telefono,
+            pieza,
+            costo,
+            recibido
+        }
+    })
+    return NextResponse.json(newPatology)
+}
