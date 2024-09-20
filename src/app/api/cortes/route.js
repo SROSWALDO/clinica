@@ -3,12 +3,14 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(request) {
   try {
-    const { nombre, ingresos, egresos, total } = await request.json();
+    const { nombre, ingresos,totalIngresos, egresos,totalEgresos, total } = await request.json();
     const newCorte = await prisma.corte.create({
       data: {
         nombre,
         ingresos,
+        totalIngresos,
         egresos,
+        totalEgresos,
         total,
       },
     });
@@ -21,7 +23,11 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const cortes = await prisma.corte.findMany();
+    const cortes = await prisma.corte.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
     return NextResponse.json(cortes);
   } catch (error) {
     console.error(error.message);

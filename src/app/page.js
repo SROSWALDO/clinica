@@ -50,8 +50,6 @@ export default function Home() {
   const handleCloseCorte = () => setIsCorteOpen(false);
 
   const agregarPaciente = (nuevoPaciente) => {
-  
-
     if (!nuevoPaciente || !nuevoPaciente.nombre) {
       toast.error("Error: El nombre del paciente es requerido.");
       return;
@@ -59,7 +57,7 @@ export default function Home() {
 
     const primerNombre = nuevoPaciente.nombre.split(" ")[0];
 
-    let mensaje; // Define la variable mensaje aquí
+    let mensaje;
 
     setPacientes((prevPacientes) => {
       // Verificar si el paciente ya existe en la lista
@@ -69,7 +67,7 @@ export default function Home() {
 
       if (pacienteExistente) {
         // Si existe, actualizar los datos del paciente en la lista
-        mensaje = `Paciente ${primerNombre} actualizado!!`; // Asigna el mensaje aquí
+        mensaje = `Paciente ${primerNombre} actualizado!!`;
         return prevPacientes.map((p) =>
           p.id === nuevoPaciente.id ? nuevoPaciente : p
         );
@@ -142,6 +140,12 @@ export default function Home() {
   //Para la página 2, slice(6, 12) devuelve: [6, 7, 8, 9, 10, 11].
 
   const crearCorte = async () => {
+
+    if (!corteNombre.trim()) {
+      toast.error("El nombre del corte es obligatorio.");
+      return; // Detener la función si el campo está vacío
+    }
+
     const ingresos = pacientes.map((paciente) => Number(paciente.ingresos));
     const egresos = pacientes.map((paciente) => Number(paciente.egresos));
     const totalIngresos = pacientes.reduce(
@@ -168,10 +172,12 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nombre: corteNombre, // Puedes ajustar el nombre según sea necesario
+          nombre: corteNombre,
           ingresos: JSON.stringify(ingresos),
+          totalIngresos: totalIngresos,
           egresos: JSON.stringify(egresos),
-          total: totalCorte,
+          totalEgresos: totalEgresos,
+          total: total,
         }),
       });
 
@@ -187,6 +193,7 @@ export default function Home() {
 
       if (deleteResponse.ok) {
         setPacientes([]);
+        setCorteNombre("")
       } else {
         console.error("Error al eliminar los pacientes");
       }
@@ -241,6 +248,7 @@ export default function Home() {
           <div className="mt-5 flex mr-5">
             <input
             value={corteNombre}
+            required
             onChange={(e) => setCorteNombre(e.target.value) }
               className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center mr-2"
               type="text"

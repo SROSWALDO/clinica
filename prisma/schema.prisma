@@ -26,11 +26,23 @@ model Paciente {
   createdAt DateTime @default(now())
 }
 
+model Patologia {
+  id Int @id @default(autoincrement())
+  fecha DateTime
+  nombre String
+  telefono String
+  pieza String
+  costo Int
+  recibido Boolean
+}
+
 model Corte {
   id Int @id @default(autoincrement())
   nombre String
   ingresos String
+  totalIngresos Float
   egresos String
+  totalEgresos Float
   total Float
   createdAt DateTime @default(now())
 }
