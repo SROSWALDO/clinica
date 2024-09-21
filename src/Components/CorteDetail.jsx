@@ -32,10 +32,13 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
       >
         {corte ? (
           <div key={corte.id} className="font-poppins text-gray-800">
-            <h2 className="text-3xl font-light mb-4">{corte.nombre}</h2>
-            <p className="text-sm text-gray-400 mb-4">{new Date(corte.createdAt).toLocaleDateString()}</p>
+            <div className='flex justify-between shadow'>
+            <h2 className="text-3xl font-light mb-2">{corte.nombre}</h2>
+            <p className="text-sm text-gray-400 mt-2 mr-4">{new Date(corte.createdAt).toLocaleDateString()}</p>
+            </div>
 
-            <div className="mb-6">
+            <div className='flex justify-between mt-2'>
+            <div className="mb-3">
               <h3 className="text-lg font-semibold mb-1 text-blue-500">Ingresos</h3>
               <ul className="list-none space-y-2">
                 {Array.isArray(corte.ingresos) ? (
@@ -46,10 +49,10 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
                   <li>No hay ingresos disponibles</li>
                 )}
               </ul>
-              <p className="text-sm text-gray-500 mb-3">Total ingresos: <span className="text-green-600 font-bold">${corte.totalIngresos}</span></p>
+              <p className="text-lg font-semibold mt-5 text-gray-500 mb-3">Total ingresos: <span className="text-green-500 font-bold">${corte.totalIngresos}</span></p>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-3">
               <h3 className="text-lg font-semibold mb-1 text-blue-500">Egresos</h3>
               
               <ul className="list-none space-y-2">
@@ -61,10 +64,11 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
                   <li>No hay egresos disponibles</li>
                 )}
               </ul>
-              <p className="text-sm text-gray-500 mb-3">Total egresos: <span className="text-red-600 font-bold">${corte.totalEgresos}</span></p>
+              <p className="text-lg font-semibold mt-5 text-gray-500 mb-3">Total egresos: <span className="text-red-600 font-bold">${corte.totalEgresos}</span></p>
+            </div>
             </div>
 
-            <div className="border-t flex border-gray-200 pt-4">
+            <div className="border-t flex border-gray-200 pt-3">
               <h3 className="text-2xl font-semibold mr-1">Total:</h3>
               <p className="text-2xl font-bold text-green-500 ">${corte.total}</p>
             </div>
