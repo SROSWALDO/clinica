@@ -130,7 +130,8 @@ export default function Home() {
   }, []);
 
   const filteredPacientes = pacientes.filter((paciente) =>
-    paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    paciente.doctor.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * pageSize; //0

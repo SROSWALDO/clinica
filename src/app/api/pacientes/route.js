@@ -5,6 +5,7 @@ export async function GET(request) {
     // Obtener los parámetros de la URL (query params)
     const { searchParams } = new URL(request.url);
     const nombre = searchParams.get("nombre"); // Obtiene el nombre desde la query string
+    const doctor = searchParams.get("doctor");
 
     // Si hay un nombre, buscar los pacientes que coincidan
     if (nombre) {
@@ -17,6 +18,17 @@ export async function GET(request) {
         });
 
         return NextResponse.json(pacientes);
+    }
+
+    if (doctor) {
+        const pacientes2 = await prisma.paciente.findMany({
+            where: {
+                doctor: {
+                    contains: doctor,
+                }
+            }
+        })
+        return NextResponse.json(pacientes2)
     }
 
     // Si no hay un parámetro de nombre, devolver todos los pacientes
