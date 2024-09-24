@@ -10,9 +10,13 @@ export async function GET(request) {
 export async function POST(request) {
     const {fecha, nombre, telefono, pieza, costo, recibido} = await request.json();
 
+    // Asegúrate de que fecha esté en formato Date con solo la fecha (hora a medianoche)
+    const fechaDate = new Date(fecha);
+    fechaDate.setHours(0, 0, 0, 0); // Establece la hora a medianoche
+
     const newPatology = await prisma.patologia.create({
         data: {
-            fecha,
+            fecha: fechaDate,
             nombre,
             telefono,
             pieza,

@@ -3,12 +3,13 @@ import Navbar from "@/Components/Navbar";
 import PatologiaForm from "@/Components/PatologiaForm";
 import Sidebar from "@/Components/Sidebar";
 import more from "../../assets/new.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [patologia, setPatologia] = useState([])
 
   const handleSide = () => {
     setIsSideOpen(!isSideOpen);
@@ -16,6 +17,27 @@ export default function Patologia() {
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  const crearPatologia = (patologia) => {
+    setPatologia((prevPatologia) => {
+      return [...prevPatologia, patologia];
+    })
+  }
+
+  useEffect(() => {
+    const fetchPatologias = async () => {
+      try {
+        const response = await fetch('/api/patologia');
+        const data = await response.json()
+        
+        setPatologia(data)
+
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchPatologias();
+  },[])
 
   return (
     <div className="font-poppins">
@@ -25,7 +47,7 @@ export default function Patologia() {
       <div>
       <div className="mt-5 ml-10">
         {isModalOpen && (
-          <PatologiaForm id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} />
+          <PatologiaForm id="default-modal" onClose={handleCloseModal} isModalOpen={isModalOpen} crearPatologia={crearPatologia} />
         )}
         <button
           type="button"

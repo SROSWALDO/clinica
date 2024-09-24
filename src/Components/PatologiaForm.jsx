@@ -1,7 +1,43 @@
 import { Modal } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
-export default function PatologiaForm({ isModalOpen, onClose}) {
+export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) {
+
+  const [formData, setFormData] = useState({
+    fecha: "",
+    nombre: "",
+    telefono: "",
+    pieza: "",
+    costo: 0,
+    recibido: null
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/patologia",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if(response.ok){
+        const newPaciente = await response.json();
+        crearPatologia(newPaciente)
+        onClose()
+      } else {
+        console.log(error.message);
+        
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
   return (
     <div>
       <Modal
@@ -10,7 +46,7 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
         width={800}
         footer={null}
       >
-        <form className="bg-white p-8 rounded-lg  w-full">
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg  w-full">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
@@ -18,7 +54,7 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
               <input
                 type="date"
                 id="fecha"
-                
+                name="fecha"
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -30,7 +66,7 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
               <input
                 type="text"
                 id="nombre"
-                
+                name="nombre"
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -42,7 +78,7 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
               <input
                 type="tel"
                 id="telefono"
-                
+                name="telefono"
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -54,7 +90,7 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
               <input
                 type="text"
                 id="consulta"
-                
+                name="consulta"
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -65,8 +101,8 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
             <div className="mb-4 ml-40 w-[350px]  floating-label">
               <input
                 type="number"
-                id="doctor"
-                
+                id="costo"
+                name="costo"
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -74,8 +110,6 @@ export default function PatologiaForm({ isModalOpen, onClose}) {
             </div>
 
             
-            
-
           </div>
 
           
