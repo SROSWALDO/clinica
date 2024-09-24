@@ -1,9 +1,9 @@
 "use client"
-import Navbar from '@/Components/Navbar';
-import Sidebar from '@/Components/Sidebar';
-import React, { useState } from 'react'
+import Navbar from "@/Components/Navbar";
+import Sidebar from "@/Components/Sidebar";
+import React, { useState } from "react";
 
-export default function Citas() {
+export default function Expedientes() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -18,5 +18,5 @@ export default function Citas() {
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
     </div>
-  )
+  );
 }

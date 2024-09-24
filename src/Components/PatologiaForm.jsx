@@ -38,6 +38,14 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
     }
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === "recibido" ? value === "true" : value
+    })
+  }
+
   return (
     <div>
       <Modal
@@ -55,6 +63,7 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
                 type="date"
                 id="fecha"
                 name="fecha"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -67,6 +76,7 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
                 type="text"
                 id="nombre"
                 name="nombre"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -79,6 +89,7 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
                 type="tel"
                 id="telefono"
                 name="telefono"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -89,8 +100,9 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
             <div className="mb-4 floating-label">
               <input
                 type="text"
-                id="consulta"
-                name="consulta"
+                id="pieza"
+                name="pieza"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
@@ -98,16 +110,27 @@ export default function PatologiaForm({ isModalOpen, onClose, crearPatologia }) 
             </div>
 
             
-            <div className="mb-4 ml-40 w-[350px]  floating-label">
+            <div className="mb-4  floating-label">
               <input
                 type="number"
                 id="costo"
                 name="costo"
+                onChange={handleChange}
                 required
                 className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full"
               />
-              <label htmlFor="doctor">Costo</label>
+              <label htmlFor="costo">Costo</label>
             </div>
+
+            <div className="mb-4  floating-label">
+              <select name="recibido" id="recibido" onChange={handleChange} >
+                <option value="">Seleccionar</option>
+                <option value="true">Recibido</option>
+                <option value="false">No Recibido</option>
+              </select>
+              <label htmlFor="recibido">Recibido</label>
+            </div>
+            
 
             
           </div>

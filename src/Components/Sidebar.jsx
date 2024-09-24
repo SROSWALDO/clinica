@@ -72,6 +72,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </div>
           </Link>
 
+          <Link href="/citas">
           <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +87,9 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </svg>
             <p className="ml-2">Citas</p>
           </div>
+          </Link>
 
+          <Link href="/expedientes" >
           <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +104,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </svg>
             <p className="ml-2">Expedientes</p>
           </div>
+          </Link>
 
           <Link href="/cortes">
             <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">

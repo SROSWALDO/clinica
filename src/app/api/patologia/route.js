@@ -14,13 +14,15 @@ export async function POST(request) {
     const fechaDate = new Date(fecha);
     fechaDate.setHours(0, 0, 0, 0); // Establece la hora a medianoche
 
+    const costoInt = parseInt(costo, 10)
+
     const newPatology = await prisma.patologia.create({
         data: {
             fecha: fechaDate,
             nombre,
             telefono,
             pieza,
-            costo,
+            costo: costoInt,
             recibido
         }
     })
