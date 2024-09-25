@@ -50,6 +50,7 @@ model Corte {
 model Cita {
   id Int @id @default(autoincrement())
   paciente String
+  telefono String
   descripcion String
   fecha DateTime
   horaFin DateTime

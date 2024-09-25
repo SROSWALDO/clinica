@@ -17,6 +17,7 @@ export default function Citas() {
 
   const [formData, setFormData] = useState({
     paciente: "",
+    telefono: "",
     descripcion: "",
     fecha: "",
     horaFin: "",
@@ -50,7 +51,7 @@ export default function Citas() {
 
         // Formatear la cita de la misma forma que las citas existentes
         const formattedCita = {
-          title: `${newCita.paciente} - ${newCita.descripcion}`,
+          title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}` ,
           start: new Date(newCita.fecha),
           end: new Date(newCita.horaFin),
           allDay: false,
@@ -62,6 +63,7 @@ export default function Citas() {
         // Limpiar el formulario
         setFormData({
           paciente: "",
+          telefono: "",
           descripcion: "",
           fecha: "",
           horaFin: "",
@@ -84,7 +86,7 @@ export default function Citas() {
 
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
-            title: `${cita.paciente} - ${cita.descripcion}`,
+            title: `${cita.paciente} - ${cita.descripcion} - ${newCita.telefono}`,
             start: new Date(cita.fecha),
             end: new Date(cita.horaFin),
             allDay: false,
@@ -117,6 +119,17 @@ export default function Citas() {
               className="rounded-lg border-blue-500 "
             />
             <label htmlFor="">Paciente</label>
+          </div>
+
+          <div className="floating-label w-[250px] mr-3">
+            <input
+              type="text"
+              name="telefono"
+              value={formData.telefono}
+              onChange={handleChange}
+              className="rounded-lg border-blue-500 "
+            />
+            <label htmlFor="">Telefono</label>
           </div>
 
           <div className="floating-label w-[250px] mr-3">
