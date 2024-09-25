@@ -125,7 +125,7 @@ export default function Home() {
         console.error("Error fetching pacientes:", error);
       }
     };
-
+    
     fetchPacientes();
   }, []);
 

@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/bootstrap5": "^6.1.15",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "@prisma/client": "^5.19.1",
     "antd": "^5.20.6",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "clinica": "file:",
+    "date-fns": "^4.1.0",
     "flowbite-react": "^0.10.1",
     "next": "14.2.9",
     "react": "^18",

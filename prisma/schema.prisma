@@ -46,3 +46,12 @@ model Corte {
   total Float
   createdAt DateTime @default(now())
 }
+
+model Cita {
+  id Int @id @default(autoincrement())
+  paciente String
+  descripcion String
+  fecha DateTime
+  horaFin DateTime
+  createdAt DateTime @default(now())
+}

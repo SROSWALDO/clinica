@@ -39,8 +39,8 @@ export default function Sidebar({ handleSide, isSideOpen }) {
           <h2 className="font-poppins text-white text-2xl ml-8 ">Menu</h2>
         </div>
 
-        <div className="mt-8">
-          <Link href="/">
+        <div className="mt-8 ">
+          <Link className="no-underline  " href="/">
             <div className="sider flex h-[40px] cursor-pointer items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </div>
           </Link>
 
-          <Link href="/patologia">
+          <Link className="no-underline" href="/patologia">
             <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +72,8 @@ export default function Sidebar({ handleSide, isSideOpen }) {
             </div>
           </Link>
 
-          <Link href="/citas">
-          <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
+          <Link className="no-underline" href="/citas">
+          <div className="sider flex h-[40px] mt-2 cursor-pointer items-center no-underline ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -89,7 +89,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
           </div>
           </Link>
 
-          <Link href="/expedientes" >
+          <Link className="no-underline" href="/expedientes" >
           <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
           </div>
           </Link>
 
-          <Link href="/cortes">
+          <Link className="no-underline" href="/cortes">
             <div className="sider flex h-[40px] mt-2 cursor-pointer items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
