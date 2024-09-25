@@ -13,7 +13,7 @@ export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [patologia, setPatologia] = useState([]);
-  const [patologiaIn, setPatologiaIn] = useState([])
+  const [patologiaIn, setPatologiaIn] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const pageSize = 8;
@@ -26,14 +26,26 @@ export default function Patologia() {
     setIsSideOpen(!isSideOpen);
   };
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = () => {
+    setPatologiaIn(null)
+    setIsModalOpen(true)
+  }
   const handleCloseModal = () => setIsModalOpen(false);
 
   const crearPatologia = (patologia) => {
     setPatologia((prevPatologia) => {
-      return [...prevPatologia, patologia];
+      const patologiaExistente = prevPatologia.find(
+        (pato) => pato.id === patologia.id
+      );
+  
+      if (patologiaExistente) {
+        return prevPatologia.map((pato) => pato.id === patologia.id ? patologia : pato); // Asegúrate de regresar el objeto actualizado
+      } else {
+        return [...prevPatologia, patologia];
+      }
     });
   };
+  
 
   const deletePatologia = async (id) => {
     try {
@@ -42,7 +54,7 @@ export default function Patologia() {
       });
 
       if (response.ok) {
-        setPatologia(patologia.filter((patologia) => patologia.id == id));
+        setPatologia(patologia.filter((patologia) => patologia.id !== id));
       } else {
         console.log(error.message);
       }
@@ -55,13 +67,12 @@ export default function Patologia() {
     try {
       const response = await fetch(`/api/patologia/${id}`);
       const data = await response.json();
-      setPatologiaIn(data)
-      setIsModalOpen(true)
+      setPatologiaIn(data);
+      setIsModalOpen(true);
     } catch (error) {
       console.log(error.message);
-      
     }
-  }
+  };
 
   useEffect(() => {
     const fetchPatologias = async () => {
@@ -78,8 +89,9 @@ export default function Patologia() {
   }, []);
 
   const filteredPatologias = patologia.filter((patologia) =>
-    patologia.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    patologia.nombre && patologia.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -174,7 +186,7 @@ export default function Patologia() {
                   </td>
                   <td className="flex py-3 justify-center">
                     <Image
-                    onClick={() => updatePatologia(pato.id) }
+                      onClick={() => updatePatologia(pato.id)}
                       src={edit}
                       className="w-[30px] m-auto ml-5 cursor-pointer "
                       alt="edit"

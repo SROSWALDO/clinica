@@ -18,14 +18,19 @@ export default function PatologiaForm({
 
   useEffect(() => {
     if (patologia) {
-      const formattedDate = new Date(patologia.fecha).toISOString().split('T')[0];
+      // Verificar si la fecha es válida antes de convertir
+      const dateValue = patologia.fecha;
+      const isValidDate = dateValue && !isNaN(new Date(dateValue).getTime());
+      const formattedDate = new Date(patologia?.fecha || Date.now())
+        .toISOString()
+        .split("T")[0];
       setFormData({
         fecha: formattedDate || "",
-        nombre: patologia.nombre || "",
-        telefono: patologia.telefono || "",
-        pieza: patologia.pieza || "",
-        costo: patologia.costo || "",
-        recibido: patologia.recibido || null,
+        nombre: patologia?.nombre || "",
+        telefono: patologia?.telefono || "",
+        pieza: patologia?.pieza || "",
+        costo: patologia?.costo || 0,
+        recibido: patologia?.recibido || null,
       });
     }
   }, [patologia]);
