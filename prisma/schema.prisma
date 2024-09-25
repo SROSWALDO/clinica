@@ -34,6 +34,7 @@ model Patologia {
   pieza String
   costo Int
   recibido Boolean
+  createdAt DateTime @default(now())
 }
 
 model Corte {

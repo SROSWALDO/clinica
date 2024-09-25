@@ -32,7 +32,11 @@ export async function GET(request) {
     }
 
     // Si no hay un parámetro de nombre, devolver todos los pacientes
-    const pacientes = await prisma.paciente.findMany();
+    const pacientes = await prisma.paciente.findMany({
+        orderBy:{
+            createdAt: 'desc'
+        }
+    });
     return NextResponse.json(pacientes);
 }
 

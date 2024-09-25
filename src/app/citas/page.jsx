@@ -7,13 +7,29 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import bootstrap5Plugin from "@fullcalendar/bootstrap5";
-import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+
+
 
 export default function Citas() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [citas, setCitas] = useState([]);
+
+  useEffect(() => {
+    // Cargar los estilos de Bootstrap
+    const bootstrapStyles = document.createElement("link");
+    bootstrapStyles.rel = "stylesheet";
+    bootstrapStyles.href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css";
+    document.head.appendChild(bootstrapStyles);
+
+    // Eliminar los estilos de Bootstrap al desmontar el componente
+    return () => {
+      document.head.removeChild(bootstrapStyles);
+    };
+  }, []);
 
   const [formData, setFormData] = useState({
     paciente: "",
@@ -59,6 +75,7 @@ export default function Citas() {
 
         // Agregar la nueva cita al estado del calendario
         setCitas((prevCitas) => [...prevCitas, formattedCita]);
+        toast.success("Cita creada con exito!")
 
         // Limpiar el formulario
         setFormData({
@@ -86,7 +103,7 @@ export default function Citas() {
 
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
-            title: `${cita.paciente} - ${cita.descripcion} - ${newCita.telefono}`,
+            title: `${cita.paciente} - ${cita.descripcion} - ${cita.telefono}`,
             start: new Date(cita.fecha),
             end: new Date(cita.horaFin),
             allDay: false,
@@ -105,6 +122,7 @@ export default function Citas() {
 
   return (
     <div>
+      
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
 
@@ -171,7 +189,7 @@ export default function Citas() {
         </form>
       </div>
 
-      <div className="mt-3 border-t-2 pt-3 " style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="mt-3 border-t-2 pt-3 font-poppins " style={{ maxWidth: "1400px", margin: "0 auto" }}>
         <FullCalendar
           plugins={[
             dayGridPlugin,
@@ -187,8 +205,14 @@ export default function Citas() {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
+          headerClassNames="text-lg font-bold p-2"
+          eventClassNames="bg-blue-500 text-white rounded-lg h-[54px]  items-center p-2 transition-transform duration-200 transform hover:scale-105"
+          dayCellClassNames="border transition duration-150"
+          
+
         />
       </div>
+      <ToastContainer theme="light" autoClose={2000}/>
     </div>
   );
 }

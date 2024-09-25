@@ -5,7 +5,7 @@ export async function DELETE(request, {params}) {
     try {
         const deletePatologia = await prisma.patologia.delete({
             where:{
-                id: Number(params.id)
+                id: parseInt(params.id)
             }
         })
 
@@ -14,7 +14,7 @@ export async function DELETE(request, {params}) {
             patologia: deletePatologia
         })
     } catch (error) {
-        NextResponse.json(error.message)
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
 
@@ -27,7 +27,7 @@ export async function GET(request, {params}) {
     return NextResponse.json(patologia)
 }
 
-export async function name(request, {params}) {
+export async function PUT(request, {params}) {
     try {
         const updatedPatologia = await prisma.patologia.update({
             where:{

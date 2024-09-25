@@ -6,11 +6,19 @@ import more from "../../assets/new.png";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import trash from "@/assets/trash.svg";
+import { Pagination } from "antd";
 
 export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [patologia, setPatologia] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const pageSize = 8;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleSide = () => {
     setIsSideOpen(!isSideOpen);
@@ -24,6 +32,24 @@ export default function Patologia() {
       return [...prevPatologia, patologia];
     });
   };
+
+  const deletePatologia = async (id) => {
+    try {
+      const response = await fetch(`/api/patologia/${id}`,{
+        method: "DELETE"
+      })
+
+      if(response.ok){
+        setPatologia(patologia.filter((patologia) => patologia.id == id ))
+      } else {
+        console.log(error.message);
+        
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
   useEffect(() => {
     const fetchPatologias = async () => {
@@ -39,12 +65,20 @@ export default function Patologia() {
     fetchPatologias();
   }, []);
 
+  const filteredPatologias = patologia.filter((patologia) =>
+    patologia.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize
+  const currentTasks = filteredPatologias.slice(startIndex, endIndex)
+
   return (
     <div className="font-poppins">
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
 
-      <div>
+      <div className="flex justify-between items-center">
         <div className="mt-5 ml-10">
           {isModalOpen && (
             <PatologiaForm
@@ -63,6 +97,8 @@ export default function Patologia() {
             Nuevo Registro
           </button>
         </div>
+
+        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value) } className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center h-[40px] mt-5 mr-6 " type="text" placeholder="Buscar..." />
       </div>
 
       <div className="m-auto w-[1500px] mt-5">
@@ -91,7 +127,7 @@ export default function Patologia() {
                 <th scope="col" className="px-2 py-3 w-[100px] text-center">Action</th>
               </tr>
             </thead>
-            {patologia.map((pato) => (
+            {currentTasks.map((pato) => (
               <tbody key={pato.id}>
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th
@@ -116,7 +152,7 @@ export default function Patologia() {
                     </p>
                   </td>
                   <td>
-                    <Image className="m-auto w-[30px] cursor-pointer hover:scale-105 transition-all" src={trash} alt="delete"></Image>
+                    <Image onClick={() => deletePatologia(pato.id)} className="m-auto w-[30px] cursor-pointer hover:scale-105 transition-all" src={trash} alt="delete"></Image>
                   </td>
                 </tr>
               </tbody>
@@ -124,6 +160,15 @@ export default function Patologia() {
           </table>
         </div>
       </div>
+      {filteredPatologias.length > pageSize && (
+        <Pagination
+          className="flex justify-center mt-4"
+          current={currentPage}
+          pageSize={pageSize}
+          total={patologia.length}
+          onChange={handlePageChange}
+        />
+      ) }
     </div>
   );
 }
