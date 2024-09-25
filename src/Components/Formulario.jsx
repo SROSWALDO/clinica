@@ -23,8 +23,9 @@ export default function Formulario({
 
   useEffect(() => {
     if (paciente) {
+      const formattedDate = new Date(paciente.fecha).toISOString().split('T')[0];
       setFormData({
-        fecha: paciente.fecha || "",
+        fecha: formattedDate || "",
         hora: paciente.hora || "",
         nombre: paciente.nombre || "",
         telefono: paciente.telefono || "",

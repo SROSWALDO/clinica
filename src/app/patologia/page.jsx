@@ -6,12 +6,14 @@ import more from "../../assets/new.png";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import trash from "@/assets/trash.svg";
+import edit from "@/assets/edit.svg";
 import { Pagination } from "antd";
 
 export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [patologia, setPatologia] = useState([]);
+  const [patologiaIn, setPatologiaIn] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const pageSize = 8;
@@ -35,18 +37,28 @@ export default function Patologia() {
 
   const deletePatologia = async (id) => {
     try {
-      const response = await fetch(`/api/patologia/${id}`,{
-        method: "DELETE"
-      })
+      const response = await fetch(`/api/patologia/${id}`, {
+        method: "DELETE",
+      });
 
-      if(response.ok){
-        setPatologia(patologia.filter((patologia) => patologia.id == id ))
+      if (response.ok) {
+        setPatologia(patologia.filter((patologia) => patologia.id == id));
       } else {
         console.log(error.message);
-        
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const updatePatologia = async (id) => {
+    try {
+      const response = await fetch(`/api/patologia/${id}`);
+      const data = await response.json();
+      setPatologiaIn(data)
+      setIsModalOpen(true)
+    } catch (error) {
+      console.log(error.message);
       
     }
   }
@@ -70,8 +82,8 @@ export default function Patologia() {
   );
 
   const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize
-  const currentTasks = filteredPatologias.slice(startIndex, endIndex)
+  const endIndex = startIndex + pageSize;
+  const currentTasks = filteredPatologias.slice(startIndex, endIndex);
 
   return (
     <div className="font-poppins">
@@ -86,6 +98,7 @@ export default function Patologia() {
               onClose={handleCloseModal}
               isModalOpen={isModalOpen}
               crearPatologia={crearPatologia}
+              patologia={patologiaIn}
             />
           )}
           <button
@@ -98,7 +111,13 @@ export default function Patologia() {
           </button>
         </div>
 
-        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value) } className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center h-[40px] mt-5 mr-6 " type="text" placeholder="Buscar..." />
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center h-[40px] mt-5 mr-6 "
+          type="text"
+          placeholder="Buscar..."
+        />
       </div>
 
       <div className="m-auto w-[1500px] mt-5">
@@ -124,7 +143,9 @@ export default function Patologia() {
                 <th scope="col" className="px-2 py-3 w-[150px]">
                   Recibido
                 </th>
-                <th scope="col" className="px-2 py-3 w-[100px] text-center">Action</th>
+                <th scope="col" className="px-2 py-3 w-[100px] text-center">
+                  Action
+                </th>
               </tr>
             </thead>
             {currentTasks.map((pato) => (
@@ -151,8 +172,19 @@ export default function Patologia() {
                       {pato.recibido ? "Recibido" : "No Recibido"}
                     </p>
                   </td>
-                  <td>
-                    <Image onClick={() => deletePatologia(pato.id)} className="m-auto w-[30px] cursor-pointer hover:scale-105 transition-all" src={trash} alt="delete"></Image>
+                  <td className="flex py-3 justify-center">
+                    <Image
+                    onClick={() => updatePatologia(pato.id) }
+                      src={edit}
+                      className="w-[30px] m-auto ml-5 cursor-pointer "
+                      alt="edit"
+                    />
+                    <Image
+                      onClick={() => deletePatologia(pato.id)}
+                      className="m-auto mr-7 w-[30px] cursor-pointer hover:scale-105 transition-all"
+                      src={trash}
+                      alt="delete"
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -168,7 +200,7 @@ export default function Patologia() {
           total={patologia.length}
           onChange={handlePageChange}
         />
-      ) }
+      )}
     </div>
   );
 }
