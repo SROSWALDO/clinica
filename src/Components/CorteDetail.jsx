@@ -74,7 +74,7 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
             </div>
           </div>
         ) : (
-          <p className="text-center text-gray-500">Cargando detalles del corte...</p>
+          <p className="text-center text-gray-500">Cargando detalles del cohorte...</p>
         )}
       </Modal>
     </div>

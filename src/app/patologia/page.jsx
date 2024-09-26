@@ -8,6 +8,8 @@ import Image from "next/image";
 import trash from "@/assets/trash.svg";
 import edit from "@/assets/edit.svg";
 import { Pagination } from "antd";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
@@ -33,18 +35,27 @@ export default function Patologia() {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const crearPatologia = (patologia) => {
+    console.log("crearPatologia called", patologia);
     setPatologia((prevPatologia) => {
       const patologiaExistente = prevPatologia.find(
         (pato) => pato.id === patologia.id
       );
   
       if (patologiaExistente) {
-        return prevPatologia.map((pato) => pato.id === patologia.id ? patologia : pato); // Asegúrate de regresar el objeto actualizado
+        // Verificar si los datos de la patología han cambiado antes de mostrar el toast
+        if (JSON.stringify(patologiaExistente) !== JSON.stringify(patologia)) {
+          toast.success(`Patología actualizada con éxito! ${patologia.nombre}`);
+        }
+        return prevPatologia.map((pato) =>
+          pato.id === patologia.id ? patologia : pato
+        );
       } else {
+        toast.success(`Patología creada con éxito! ${patologia.nombre}`);
         return [...prevPatologia, patologia];
       }
     });
   };
+  
   
 
   const deletePatologia = async (id) => {

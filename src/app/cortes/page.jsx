@@ -65,7 +65,7 @@ export default function Cortes() {
       <div className="w-[1350px] mt-5 m-auto flex flex-wrap justify-center gap-4">
         {cortes.length === 0 ? (
           <div className="flex items-center justify-center mt-56 text-4xl text-blue-500">
-            <h1>No hay Cortes...</h1>
+            <h1>No hay Cohortes...</h1>
             <Image className="w-[50px]" src={corteImage} alt="corte" />
           </div>
         ) : (

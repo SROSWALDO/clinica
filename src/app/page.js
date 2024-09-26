@@ -269,13 +269,13 @@ export default function Home() {
             onChange={(e) => setCorteNombre(e.target.value) }
               className="rounded-lg border-blue-500 text-blue-400 placeholder:text-blue-400 items-center mr-2"
               type="text"
-              placeholder="Nombre del corte"
+              placeholder="Nombre del cohorte"
             />
             <button
               onClick={crearCorte}
               className="bg-blue-500 text-white p-2 rounded-lg mr-4 flex hover:bg-blue-600"
             >
-              Crear corte
+              Crear cohorte
               <Image className="ml-1" src={corte} alt="corte" />
             </button>
           </div>

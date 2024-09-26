@@ -34,11 +34,11 @@ export default function Corte({ isCorteOpen, onClose, ingresos, egresos, total, 
           </div>
         </div>
         <div className='text-center mb-4'>
-          <h1 className='text-2xl font-bold text-gray-800'>Total Corte: ${total}</h1>
+          <h1 className='text-2xl font-bold text-gray-800'>Total Cohorte: ${total}</h1>
         </div>
         <div className='flex justify-center'>
           <button className='flex items-center p-2 bg-blue-500 rounded-md text-base text-white hover:bg-blue-600 transition duration-200'>
-            Imprimir Corte
+            Imprimir Cohorte
             <Image className='ml-2' src={corte} alt='corte' />
           </button>
         </div>
