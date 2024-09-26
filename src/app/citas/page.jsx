@@ -185,7 +185,7 @@ export default function Citas() {
           <label htmlFor="">Fecha fin</label>
           </div>
 
-          <button className="bg-blue-500 text-white px-2 rounded-lg" type="submit">Crear Cita</button>
+          <button className="bg-blue-500 text-white px-2 rounded-lg hover:bg-blue-600" type="submit">Crear Cita</button>
         </form>
       </div>
 

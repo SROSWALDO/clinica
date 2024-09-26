@@ -1,6 +1,9 @@
 import { Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import print from "@/assets/print.svg";
+import Image from "next/image";
+import ReactToPrint from "react-to-print";
 
 export default function Formulario({
   isModalOpen,
@@ -21,9 +24,13 @@ export default function Formulario({
     egresos: 0,
   });
 
+  const componentRef = useRef();
+
   useEffect(() => {
     if (paciente) {
-      const formattedDate = new Date(paciente.fecha).toISOString().split('T')[0];
+      const formattedDate = new Date(paciente.fecha)
+        .toISOString()
+        .split("T")[0];
       setFormData({
         fecha: formattedDate || "",
         hora: paciente.hora || "",
@@ -41,19 +48,20 @@ export default function Formulario({
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-  
+
     setFormData({
       ...formData,
-      [name]: type === 'checkbox'
-        ? checked
-        : name === 'ambulancia'
-        ? value === 'true'
-        : name === 'ingresos' || name === 'egresos' || name === 'radiografias'
-        ? parseInt(value, 10)
-        : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : name === "ambulancia"
+          ? value === "true"
+          : name === "ingresos" || name === "egresos" || name === "radiografias"
+          ? parseInt(value, 10)
+          : value,
     });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -252,12 +260,78 @@ export default function Formulario({
 
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded-lg mt-4"
+            className="bg-blue-500 text-white p-2 rounded-lg mt-4 hover:bg-blue-600 "
           >
             {paciente ? "Actualizar Paciente" : "Agregar Paciente"}
           </button>
         </form>
+
+        {/* Componente para imprimir */}
+        <div ref={componentRef} className="printable-content">
+          <h1 className="text-center text-base font-bold mb-2 text-blue-500 ">
+            SERVICIO MEDICO CRISTO MEDICO
+          </h1>
+          <p className="text-[8px] text-center">
+            CIRUGIA GENERAL • CONSULTAS • URGENCIAS • ULTRASONIDOS
+          </p>
+          <p className="text-center text-sm mt-2">
+            Dr. Luis Abelardo Sotelo Vargas
+          </p>
+          <p className="text-center text-xs">MEDICO CIRUJANO</p>
+          <p className="text-center">Cedula Profesional: 8926487</p>
+
+          <p className="text-center">
+            Calle Topacio No.19 Colonia Centro, C.P.40880 Zihuatanejo Guerrero
+          </p>
+          <p className="text-center">Tel. 755 119 65 07</p>
+
+          <p className="mt-3 text-center">
+            Fecha:{" "}
+            {new Date(formData.fecha).toLocaleDateString("es-ES", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          <p className="mt-5 text-center">
+            <p className="">Recibo: ${formData.ingresos}</p> 
+          </p>
+
+          <p className="text-base text-center">Recibimos de {formData.nombre}</p>
+          <p className="text-center">La cantidad de: ${formData.ingresos}</p>
+          <p className="text-center">En concepto de: {formData.consulta}</p>
+
+          <div className="mt-14 border-t border-t-black w-[180px] m-auto">
+            <p className="text-center">Firma de recibido</p>
+          </div>
+        </div>
+
+        {paciente && (
+          <ReactToPrint
+            trigger={() => (
+              <button className="absolute bottom-[55px] right-16 bg-blue-500 text-white p-2 rounded-lg flex hover:bg-blue-600">
+                <Image className="mr-1" src={print} alt="print" />
+                Imprimir Recibo
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
+        )}
       </Modal>
+      <style jsx>{`
+        @media print {
+          .printable-content {
+            display: block !important;
+            width: 80mm;
+          }
+        }
+
+        @media screen {
+          .printable-content {
+            display: none;
+          }
+        }
+      `}</style>
     </div>
   );
 }
