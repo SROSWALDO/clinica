@@ -141,31 +141,32 @@ export default function Home() {
   //Para la página 2, slice(6, 12) devuelve: [6, 7, 8, 9, 10, 11].
 
   const crearCorte = async () => {
-
     if (!corteNombre.trim()) {
       toast.error("El nombre del corte es obligatorio.");
-      return; // Detener la función si el campo está vacío
+      return;
     }
-
-    const ingresos = pacientes.map((paciente) => Number(paciente.ingresos));
-    const egresos = pacientes.map((paciente) => Number(paciente.egresos));
-    const totalIngresos = pacientes.reduce(
+  
+    // Filtrar pacientes que aún no tienen un corteId
+    const pacientesSinCorte = pacientes.filter((paciente) => !paciente.corteId);
+  
+    const ingresos = pacientesSinCorte.map((paciente) => Number(paciente.ingresos));
+    const egresos = pacientesSinCorte.map((paciente) => Number(paciente.egresos));
+    const totalIngresos = pacientesSinCorte.reduce(
       (total, paciente) => total + Number(paciente.ingresos),
       0
     );
-    const totalEgresos = pacientes.reduce(
+    const totalEgresos = pacientesSinCorte.reduce(
       (total, paciente) => total + Number(paciente.egresos),
       0
     );
     const total = totalIngresos - totalEgresos;
-
+  
     setIngresos(ingresos);
     setEgresos(egresos);
     setTotalIngresos(totalIngresos);
     setTotalEgresos(totalEgresos);
     setTotalCorte(total);
-
-    // Enviar el nuevo corte al backend
+  
     try {
       const response = await fetch("/api/cortes", {
         method: "POST",
@@ -181,30 +182,45 @@ export default function Home() {
           total: total,
         }),
       });
-
+  
       if (!response.ok) {
         console.error("Error al crear el corte");
         return;
       }
-
-      // Eliminar todos los pacientes
-      const deleteResponse = await fetch("/api/pacientes", {
-        method: "DELETE",
+  
+      // Obtener el ID del corte recién creado
+      const corteData = await response.json();
+      const corteId = corteData.id;
+  
+      // Actualizar los pacientes sin corteId asignado
+      const updateResponse = await fetch("/api/pacientes/actualizarCorte", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ corteId: corteId }),
       });
-
-      if (deleteResponse.ok) {
-        setPacientes([]);
-        setCorteNombre("")
+  
+      if (!updateResponse.ok) {
+        console.error("Error al actualizar los pacientes con corteId");
       } else {
-        console.error("Error al eliminar los pacientes");
+        // Limpiar el nombre del corte
+        setCorteNombre("");
+  
+        // Actualizar el estado de los pacientes para excluir los que se incluyeron en el corte
+        setPacientes((prevPacientes) =>
+          prevPacientes.map((paciente) =>
+            paciente.corteId ? paciente : { ...paciente, corteId: corteId }
+          )
+        );
       }
     } catch (error) {
       console.error("Error:", error);
     }
-
+  
     setIsCorteOpen(true);
   };
-
+  
   return (
     <div className="font-poppins">
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />

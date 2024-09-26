@@ -23,7 +23,10 @@ model Paciente {
   ambulancia Boolean
   ingresos Int
   egresos Int
+  corteId Int?
   createdAt DateTime @default(now())
+
+  Corte Corte? @relation(fields: [corteId], references: [id])
 }
 
 model Patologia {
@@ -46,6 +49,8 @@ model Corte {
   totalEgresos Float
   total Float
   createdAt DateTime @default(now())
+
+  pacientes Paciente[]
 }
 
 model Cita {
