@@ -8,7 +8,7 @@ import Sidebar from './Sidebar';
 export default function Navbar({ handleSide }) {
 
   return (
-    <div className='w-full flex justify-between shadow-md items-center px-5 ' >
+    <div className='w-full h-[80px] flex justify-between shadow-md items-center px-5 ' >
     <div>
     <Image  className='w-[190px]' src={logo} alt='logo' />
     </div>
