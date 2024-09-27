@@ -62,3 +62,12 @@ model Cita {
   horaFin DateTime
   createdAt DateTime @default(now())
 }
+
+model Expediente {
+    id        Int      @id @default(autoincrement())
+    nombre    String
+    url       String?  // Campo para almacenar la URL del archivo
+    createdAt DateTime @default(now())
+}
+
+
