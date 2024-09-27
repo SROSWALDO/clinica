@@ -14,7 +14,7 @@ export default function Navbar({ handleSide }) {
     </div>
 
     <div>
-      <Image onClick={handleSide} className='w-[45px] h-[45px] cursor-pointer hover:scale-105 transition-all ' src={menu} alt='menu' />
+      <Image onClick={handleSide} className='hamburguesa w-[45px] h-[45px] cursor-pointer hover:scale-105 transition-all ' src={menu} alt='menu' />
     </div>
 
     

@@ -57,6 +57,10 @@
       background-color: #fff;
      
     }
+
+    .hamburguesa {
+      width: 45px;
+    }
     
     
     .sider:hover::after {
