@@ -10,6 +10,7 @@ import edit from "@/assets/edit.svg";
 import { Pagination } from "antd";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import dna from "@/assets/dna.svg"
 
 export default function Patologia() {
   const [isSideOpen, setIsSideOpen] = useState(false);
@@ -143,7 +144,13 @@ export default function Patologia() {
         />
       </div>
 
-      <div className="m-auto w-[1500px] mt-5">
+      {patologia.length == 0 ? (
+        <div className="flex justify-center items-center mt-52 text-4xl font-medium text-blue-500 ">
+          <p>No hay patologias...</p>
+          <Image className="ml-1 w-[50px]" src={dna} alt="dna" />
+        </div>
+      ) : (
+        <div className="m-auto w-[1500px] mt-5">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
             <thead className="text-xs text-white uppercase font-poppins bg-blue-500">
@@ -215,6 +222,7 @@ export default function Patologia() {
           </table>
         </div>
       </div>
+      )}
       {filteredPatologias.length > pageSize && (
         <Pagination
           className="flex justify-center mt-4"

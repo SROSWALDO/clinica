@@ -1,9 +1,0 @@
--- CreateTable
-CREATE TABLE "Cita" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "paciente" TEXT NOT NULL,
-    "descripcion" TEXT NOT NULL,
-    "fecha" DATETIME NOT NULL,
-    "horaFin" DATETIME NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
