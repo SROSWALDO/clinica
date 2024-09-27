@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import logo from '../assets/logo2.png';
+import logo from '../assets/logoCristo.png';
 import menu from '../assets/menu.png'
 import Image from 'next/image';
 import Sidebar from './Sidebar';
@@ -10,7 +10,7 @@ export default function Navbar({ handleSide }) {
   return (
     <div className='w-full flex justify-between shadow-md items-center px-5 ' >
     <div>
-    <Image  className='w-[270px]' src={logo} alt='logo' />
+    <Image  className='w-[190px]' src={logo} alt='logo' />
     </div>
 
     <div>

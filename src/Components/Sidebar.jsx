@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import x from "@/assets/x.svg";
 import Image from "next/image";
-import logo from "@/assets/logoside.png";
+import logo from "@/assets/logoAsideMedico.png";
 import Link from "next/link";
 
 export default function Sidebar({ handleSide, isSideOpen }) {
@@ -143,7 +143,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
 
         <div className="flex justify-center">
           <Image
-            className="absolute bottom-1 w-[240px] "
+            className="absolute bottom-1 w-[240px] mb-6"
             src={logo}
             alt="logo"
           />
