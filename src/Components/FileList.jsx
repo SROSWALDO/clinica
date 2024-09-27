@@ -25,7 +25,7 @@ const ExpedientesList = ({downloadURL}) => {
   return (
     <div className='w-[900px] m-auto bg-blue-500 shadow text-white mt-5 text-lg border-b-2 border-b-white rounded-md' >
       <h2 className='p-1'>Lista de Expedientes</h2>
-      {error && <p>{error}</p>}
+      
       <div className='w-[900px] m-auto shadow border-t'>
         <table className="w-full m-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
           <thead className="text-xs text-white uppercase font-poppins bg-blue-500">
