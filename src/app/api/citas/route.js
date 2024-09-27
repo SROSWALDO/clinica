@@ -28,7 +28,7 @@ export async function GET(request) {
 
 export async function DELETE() {
   try {
-      // Eliminar todos los pacientes de la tabla
+      // Eliminar todos las citas de la tabla
       await prisma.cita.deleteMany();
       
       // Retornar una respuesta exitosa

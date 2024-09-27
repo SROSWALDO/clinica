@@ -34,3 +34,15 @@ export async function GET() {
     return NextResponse.json({ error: "Error al obtener los cortes" }, { status: 500 });
   }
 }
+
+export async function DELETE() {
+  try {
+    await prisma.corte.deleteMany();
+    return NextResponse.json({ message: "Todos los cohortes han sido eliminados" }, { status: 200 })
+  } catch (error) {
+    console.error("Error al eliminar los cohortes", error);
+    return NextResponse.json({error: "Error eliminando cohortes"}, { status:500 })
+    
+  }
+  
+}

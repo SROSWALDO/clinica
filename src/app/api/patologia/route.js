@@ -50,7 +50,7 @@ export async function POST(request) {
 
 export async function DELETE() {
     try {
-        // Eliminar todos los pacientes de la tabla
+        // Eliminar todos los patologias de la tabla
         await prisma.patologia.deleteMany();
         
         // Retornar una respuesta exitosa

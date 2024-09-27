@@ -1,11 +1,14 @@
 "use client";
-import FileList from "@/Components/FileList";
+
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
 import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import fileIcon from "@/assets/file.svg"
 import "react-toastify/dist/ReactToastify.css";
 import { Pagination } from "antd";
+import Image from "next/image";
+import importFile from "@/assets/import.svg"
 
 export default function Expedientes() {
   const [file, setFile] = useState(null);
@@ -109,10 +112,13 @@ export default function Expedientes() {
               onChange={(e) => setFile(e.target.files[0])}
             />
             <button
-              className="ml-5 bg-white text-blue-500 p-2 rounded-lg"
+              className="ml-5 bg-white text-blue-500 p-2 rounded-lg absolute "
               type="submit"
             >
-              Subir Archivo
+            <div className="flex">
+            <Image src={importFile} alt="import" />
+            <p>Subir Archivo</p>
+            </div>
             </button>
           </form>
           {message && <p>{message}</p>}
@@ -143,7 +149,10 @@ export default function Expedientes() {
             <tr className='shadow bg-white '>
               <td className="px-6 py-4">{new Date(expediente.createdAt).toLocaleDateString("es-ES")}</td>
               <td className="px-6 py-4">{expediente.nombre}</td>
-              <td className="px-6 py-4"><a className='bg-blue-500 p-2 rounded-lg text-white text-base' href={expediente.url} target='_blank' >Ver archivo</a></td>
+              <td className="px-6 py-4 flex"><a className='bg-blue-500 p-2 rounded-lg text-white text-base flex' href={expediente.url} target='_blank' >
+              <Image className="mr-1" src={fileIcon} alt="file" />
+              Ver archivo
+              </a></td>
             </tr>
           </tbody>
         ))}
