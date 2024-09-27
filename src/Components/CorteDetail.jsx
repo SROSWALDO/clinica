@@ -105,12 +105,24 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
             </div>
 
             <div ref={componentReff} className="printable-content p-1">
-            
-              <div className="flex justify-between shadow">
-                <h2 className="text-3xl font-light mb-2">{corte.nombre}</h2>
+              <div className="">
+              <h1 className="text-center text-base font-bold mb-2 text-blue-500 ">
+                  SERVICIO MEDICO CRISTO MEDICO
+                </h1>
+                <p className="text-[8px] text-center">
+                  CIRUGIA GENERAL • CONSULTAS • URGENCIAS • ULTRASONIDOS
+                </p>
+                <p className="text-center text-sm mt-2">
+                  Dr. Luis Abelardo Sotelo Vargas
+                </p>
+                <p className="text-center text-xs">MEDICO CIRUJANO</p>
+                <p className="text-center">Cedula Profesional: 8926487</p>
+                <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-light mb-2 mt-3">{corte.nombre}</h2>
                 <p className="text-sm text-gray-400 mt-2 mr-4">
                   {new Date(corte.createdAt).toLocaleDateString()}
                 </p>
+                </div>
               </div>
 
               <div className="flex justify-between mt-2">
@@ -160,15 +172,13 @@ export default function CorteDetail({ isCorteOpen, onClose, index }) {
                     </span>
                   </p>
                 </div>
-
-                
               </div>
               <div className="border-t flex border-gray-200 pt-3">
-              <h3 className="text-2xl font-semibold mr-1">Total:</h3>
-              <p className="text-2xl font-bold text-green-500 ">
-                ${corte.total}
-              </p>
-            </div>
+                <h3 className="text-2xl font-semibold mr-1">Total:</h3>
+                <p className="text-2xl font-bold text-green-500 ">
+                  ${corte.total}
+                </p>
+              </div>
             </div>
 
             <div className="flex justify-center mt-4">

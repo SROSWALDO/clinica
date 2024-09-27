@@ -95,7 +95,7 @@ export default function Configuracion() {
     <div>
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
-      <ToastContainer />
+      <ToastContainer theme="light" autoClose={2000} />
 
       <div className="contenedor p-5 font-poppins mt-12">
 

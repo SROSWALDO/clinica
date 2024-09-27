@@ -93,7 +93,7 @@ export default function Expedientes() {
     <div>
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
-      <ToastContainer />
+      <ToastContainer theme="light" autoClose={2000} />
       <div className="flex w-[900px] m-auto items-center justify-between">
         <div className="mt-5 rounded-xl shadow w-[550px] m-auto p-2 border bg-blue-500 text-white font-poppins ">
           <h2>Subir Expediente</h2>
