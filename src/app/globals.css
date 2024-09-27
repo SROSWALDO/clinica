@@ -61,6 +61,11 @@
     .hamburguesa {
       width: 45px;
     }
+
+    .sidebar {
+      background: linear-gradient(30deg, #0048bd, #44a7fd);
+    }
+    
     
     
     .sider:hover::after {

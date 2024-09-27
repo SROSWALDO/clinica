@@ -24,7 +24,7 @@ export default function Sidebar({ handleSide, isSideOpen }) {
       {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className={`absolute top-0 right-0 h-[100vh] w-[250px] bg-custom-gradient rounded-tl-[50px] transform transition-transform duration-500 ease-in-out ${
+        className={`sidebar absolute top-0 right-0 h-[100vh] w-[250px] bg-custom-gradient rounded-tl-[50px] transform transition-transform duration-500 ease-in-out ${
           isSideOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
