@@ -30,13 +30,13 @@ export default function Sidebar({ handleSide, isSideOpen }) {
       >
         <button onClick={handleSide}>
           <Image
-            className="absolute right-4 top-6 w-[30px] hover:scale-105 transition-all hover:bg-blue-400 rounded-lg"
+            className="equis absolute right-4 top-6 w-[30px] hover:scale-105 transition-all hover:bg-blue-400 rounded-lg"
             src={x}
             alt="exit"
           />
         </button>
         <div>
-          <h2 className="font-poppins text-white text-2xl ml-8 ">Menu</h2>
+          <h2 className="title-menu font-poppins text-white text-2xl ml-8 ">Menu</h2>
         </div>
 
         <div className="mt-8 ">

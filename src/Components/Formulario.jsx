@@ -309,7 +309,7 @@ export default function Formulario({
         {paciente && (
           <ReactToPrint
             trigger={() => (
-              <button className="absolute bottom-[55px] right-16 bg-blue-500 text-white p-2 rounded-lg flex hover:bg-blue-600">
+              <button className="button-imp absolute bottom-[55px] right-16 bg-blue-500 text-white p-2 rounded-lg flex hover:bg-blue-600">
                 <Image className="mr-1" src={print} alt="print" />
                 Imprimir Recibo
               </button>

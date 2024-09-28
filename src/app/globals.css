@@ -67,6 +67,21 @@
       border-top-left-radius: 50px;
       height: 100vh;
     }
+
+    .equis{
+      position: absolute;
+      right: 16px;
+      top: 24px;
+    }
+
+    .title-menu{
+      margin-left: 32px;
+    }
+
+    .button-imp{
+      position: absolute;
+      right: 64px;
+    }
     
     
     
