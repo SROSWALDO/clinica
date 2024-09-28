@@ -64,6 +64,8 @@
 
     .sidebar {
       background: linear-gradient(30deg, #0048bd, #44a7fd);
+      border-top-left-radius: 50px;
+      height: 100vh;
     }
     
     
