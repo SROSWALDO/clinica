@@ -63,18 +63,18 @@ export default function Citas() {
 
       if (response.ok) {
         const newCita = await response.json();
-        console.log(newCita.fecha);
-        console.log(newCita.horaFin);
-
+        
         // Formatear la cita de la misma forma que las citas existentes
         const formattedCita = {
           title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}`,
-          start: new Date(newCita.fecha),
-          end: new Date(newCita.horaFin),
+          start: new Date(newCita.fecha).toISOString(),
+          end: new Date(newCita.horaFin).toISOString(),
           allDay: false,
         };
 
+
         // Agregar la nueva cita al estado del calendario
+        localStorage.setItem("citas", JSON.stringify([...citas, formattedCita]));
         setCitas((prevCitas) => [...prevCitas, formattedCita]);
         toast.success("Cita creada con exito!");
 
@@ -101,15 +101,17 @@ export default function Citas() {
         const response = await fetch("/api/citas");
         if (response.ok) {
           const data = await response.json();
+          console.log("Citas obtenidas:", data);
 
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
             title: `${cita.paciente} - ${cita.descripcion} - ${cita.telefono}`,
-            start: new Date(newCita.fecha).toLocaleString("es-MX", { timeZone: "America/Mexico_City" }),
-            end: new Date(newCita.horaFin).toLocaleString("es-MX", { timeZone: "America/Mexico_City" }),
+            start: cita.fecha,
+            end: cita.horaFin,
             allDay: false,
           }));
           setCitas(citasFormatted);
+          localStorage.setItem("citas", JSON.stringify(citasFormatted));
         } else {
           console.error("Error al obtener las citas");
         }

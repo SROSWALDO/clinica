@@ -21,7 +21,7 @@ export async function POST(request) {
   return NextResponse.json(newCita);
 }
 
-export async function GET(request) {
+export async function GET() {
   const citas = await prisma.cita.findMany();
   return NextResponse.json(citas);
 }
