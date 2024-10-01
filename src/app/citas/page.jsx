@@ -201,7 +201,6 @@ export default function Citas() {
         style={{ maxWidth: "1400px", margin: "0 auto" }}
       >
         <FullCalendar
-          timeZone="local"
           plugins={[
             dayGridPlugin,
             timeGridPlugin,
