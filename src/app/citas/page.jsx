@@ -8,10 +8,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-
-
 
 export default function Citas() {
   const [isSideOpen, setIsSideOpen] = useState(false);
@@ -22,7 +20,8 @@ export default function Citas() {
     // Cargar los estilos de Bootstrap
     const bootstrapStyles = document.createElement("link");
     bootstrapStyles.rel = "stylesheet";
-    bootstrapStyles.href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css";
+    bootstrapStyles.href =
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css";
     document.head.appendChild(bootstrapStyles);
 
     // Eliminar los estilos de Bootstrap al desmontar el componente
@@ -64,10 +63,12 @@ export default function Citas() {
 
       if (response.ok) {
         const newCita = await response.json();
+        console.log(newCita.fecha);
+        console.log(newCita.horaFin);
 
         // Formatear la cita de la misma forma que las citas existentes
         const formattedCita = {
-          title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}` ,
+          title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}`,
           start: new Date(newCita.fecha),
           end: new Date(newCita.horaFin),
           allDay: false,
@@ -75,7 +76,7 @@ export default function Citas() {
 
         // Agregar la nueva cita al estado del calendario
         setCitas((prevCitas) => [...prevCitas, formattedCita]);
-        toast.success("Cita creada con exito!")
+        toast.success("Cita creada con exito!");
 
         // Limpiar el formulario
         setFormData({
@@ -104,8 +105,8 @@ export default function Citas() {
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
             title: `${cita.paciente} - ${cita.descripcion} - ${cita.telefono}`,
-            start: new Date(cita.fecha),
-            end: new Date(cita.horaFin),
+            start: new Date(newCita.fecha).toLocaleString("es-MX", { timeZone: "America/Mexico_City" }),
+            end: new Date(newCita.horaFin).toLocaleString("es-MX", { timeZone: "America/Mexico_City" }),
             allDay: false,
           }));
           setCitas(citasFormatted);
@@ -122,7 +123,6 @@ export default function Citas() {
 
   return (
     <div>
-      
       <Sidebar handleSide={handleSide} isSideOpen={isSideOpen} />
       <Navbar handleSide={handleSide} />
 
@@ -162,35 +162,44 @@ export default function Citas() {
           </div>
 
           <div className="floating-label w-[250px] mr-3">
-          <input
-            type="datetime-local"
-            name="fecha"
-            id="fecha"
-            value={formData.fecha}
-            onChange={handleChange}
-            className="rounded-lg border-blue-500 mr-3 "
-          />
-          <label htmlFor="">Fecha inicio</label>
-          </div>
-          
-          <div className="floating-label w-[250px] mr-5">
-          <input
-            type="datetime-local"
-            name="horaFin"
-            value={formData.horaFin}
-            id="horaFin"
-            onChange={handleChange}
-            className="rounded-lg border-blue-500 mr-3 "
-          />
-          <label htmlFor="">Fecha fin</label>
+            <input
+              type="datetime-local"
+              name="fecha"
+              id="fecha"
+              value={formData.fecha}
+              onChange={handleChange}
+              className="rounded-lg border-blue-500 mr-3 "
+            />
+            <label htmlFor="">Fecha inicio</label>
           </div>
 
-          <button className="bg-blue-500 text-white px-2 rounded-lg hover:bg-blue-600" type="submit">Crear Cita</button>
+          <div className="floating-label w-[250px] mr-5">
+            <input
+              type="datetime-local"
+              name="horaFin"
+              value={formData.horaFin}
+              id="horaFin"
+              onChange={handleChange}
+              className="rounded-lg border-blue-500 mr-3 "
+            />
+            <label htmlFor="">Fecha fin</label>
+          </div>
+
+          <button
+            className="bg-blue-500 text-white px-2 rounded-lg hover:bg-blue-600"
+            type="submit"
+          >
+            Crear Cita
+          </button>
         </form>
       </div>
 
-      <div className="mt-3 border-t-2 pt-3 font-poppins " style={{ maxWidth: "1400px", margin: "0 auto" }}>
+      <div
+        className="mt-3 border-t-2 pt-3 font-poppins "
+        style={{ maxWidth: "1400px", margin: "0 auto" }}
+      >
         <FullCalendar
+          timeZone="local"
           plugins={[
             dayGridPlugin,
             timeGridPlugin,
@@ -208,11 +217,9 @@ export default function Citas() {
           headerClassNames="text-lg font-bold p-2"
           eventClassNames="bg-blue-500 text-white rounded-lg h-[54px]  items-center p-2 transition-transform duration-200 transform hover:scale-105"
           dayCellClassNames="border transition duration-150"
-          
-
         />
       </div>
-      <ToastContainer theme="light" autoClose={2000}/>
+      <ToastContainer theme="light" autoClose={2000} />
     </div>
   );
 }
