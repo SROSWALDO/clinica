@@ -56,6 +56,8 @@ export default function Home() {
     }
 
     const primerNombre = nuevoPaciente.nombre.split(" ")[0];
+    console.log(nuevoPaciente.fecha);
+    
 
     let mensaje;
 
@@ -340,7 +342,7 @@ export default function Home() {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <p>
-                        {new Date(paciente.fecha).toLocaleDateString("es-ES")}
+                      <p>{new Date(paciente.fecha).toISOString().split('T')[0]}</p>
                       </p>
                       <p>{paciente.hora}</p>
                     </th>

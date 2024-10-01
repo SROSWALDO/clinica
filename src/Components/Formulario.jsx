@@ -69,7 +69,7 @@ export default function Formulario({
       toast.error("El nombre del paciente es requerido.");
       return;
     }
-    console.log("Datos a enviar:", formData);
+    console.log("Datos a enviar:", formData, formData.fecha);
 
     const url = paciente
       ? `/api/pacientes/${paciente.id}` // PUT a la ruta con el ID del paciente

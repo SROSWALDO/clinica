@@ -72,7 +72,7 @@ export default function Cortes() {
           cortes.map(corte => (
             <div
               key={corte.id}
-              onClick={() => handleOpenModal(corte.id)}  // Abre el modal del corte seleccionado
+                // Abre el modal del corte seleccionado
               className="w-[320px] bg-white shadow-lg rounded-xl relative m-2 hover:scale-105 transition-transform cursor-pointer border border-gray-200 hover:shadow-2xl"
             >
               <h1 className="text-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-t-xl py-2 text-lg font-semibold">
@@ -80,7 +80,7 @@ export default function Cortes() {
               </h1>
               <Image onClick={() => deleteCorte(corte.id)} src={x} alt="delete" className="absolute right-2 top-2 hover:bg-red-500 rounded-full" />
               <p className="text-center text-gray-500 text-sm p-2">{formatDate(corte.createdAt)}</p>
-              <div className="flex justify-between px-4">
+              <div onClick={() => handleOpenModal(corte.id)} className="flex justify-between px-4">
                 <div className="text-center">
                   <p className="text-indigo-600 font-bold uppercase">Ingresos:</p>
                   <p className="font-semibold">${corte.totalIngresos}</p>
