@@ -106,8 +106,8 @@ export default function Citas() {
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
             title: `${cita.paciente} - ${cita.descripcion} - ${cita.telefono}`,
-            start: cita.fecha,
-            end: cita.horaFin,
+            start:new Date(cita.fecha).toLocaleString('es-MX', { timeZone: 'America/Mexico_City' }),
+            end: new Date(cita.horaFin).toLocaleString('es-MX', { timeZone: 'America/Mexico_City' }),
             allDay: false,
           }));
           setCitas(citasFormatted);
