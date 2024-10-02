@@ -66,8 +66,8 @@ export default function Citas() {
 
   
 
-    console.log("Fecha de Inicio (UTC):", fechaInicioUTC);
-    console.log("Hora de Fin (UTC):", horaFinUTC);
+    console.log("Fecha de Inicio (UTC):", fechaInicioDate);
+    console.log("Hora de Fin (UTC):", horaFinDate);
 
     try {
         const response = await fetch("/api/citas", {
