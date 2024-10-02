@@ -52,47 +52,63 @@ export default function Citas() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Obtener la fecha y la hora inicial y final
+    const { fecha, horaFin } = formData;
+
+    // Crear objetos de fecha ajustados
+    const fechaInicioDate = new Date(fecha);
+    const horaFinDate = new Date(horaFin);
+
+    // Ajustar la fecha y hora según el desplazamiento de la zona horaria local
+    const fechaInicioAjustada = new Date(fechaInicioDate.getTime() + (fechaInicioDate.getTimezoneOffset() * 60000));
+    const horaFinAjustada = new Date(horaFinDate.getTime() + (horaFinDate.getTimezoneOffset() * 60000));
+
     try {
-      const response = await fetch("/api/citas", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const newCita = await response.json();
-        
-        // Formatear la cita de la misma forma que las citas existentes
-        const formattedCita = {
-          title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}`,
-          start: newCita.fecha,
-          end: newCita.horaFin,
-          allDay: false,
-        };
-
-
-        // Agregar la nueva cita al estado del calendario
-        localStorage.setItem("citas", JSON.stringify([...citas, formattedCita]));
-        setCitas((prevCitas) => [...prevCitas, formattedCita]);
-        toast.success("Cita creada con exito!");
-
-        // Limpiar el formulario
-        setFormData({
-          paciente: "",
-          telefono: "",
-          descripcion: "",
-          fecha: "",
-          horaFin: "",
+        const response = await fetch("/api/citas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...formData,
+                fecha: fechaInicioAjustada.toISOString(),
+                horaFin: horaFinAjustada.toISOString(),
+            }),
         });
-      } else {
-        console.error("Error al crear la cita");
-      }
+
+        if (response.ok) {
+            const newCita = await response.json();
+            
+            // Formatear la cita de la misma forma que las citas existentes
+            const formattedCita = {
+                title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}`,
+                start: newCita.fecha,
+                end: newCita.horaFin,
+                allDay: false,
+            };
+
+            // Agregar la nueva cita al estado del calendario
+            localStorage.setItem("citas", JSON.stringify([...citas, formattedCita]));
+            setCitas((prevCitas) => [...prevCitas, formattedCita]);
+            toast.success("Cita creada con éxito!");
+
+            // Limpiar el formulario
+            setFormData({
+                paciente: "",
+                telefono: "",
+                descripcion: "",
+                fecha: "",
+                horaFin: "",
+            });
+        } else {
+            console.error("Error al crear la cita");
+        }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+        console.error("Error en la solicitud:", error);
     }
-  };
+};
+
 
   useEffect(() => {
     // Obtener las citas desde la API
