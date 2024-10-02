@@ -57,16 +57,19 @@ export default function Citas() {
     const { fecha, horaFin } = formData;
 
     // Combinar la fecha y la hora en un solo string
-    const fechaInicioStr = `${fecha.split("T")[0]}T${fecha.split("T")[1]}`; // Fecha de inicio en formato ISO
-    const horaFinStr = `${horaFin.split("T")[0]}T${horaFin.split("T")[1]}`; // Fecha de fin en formato ISO
+    const fechaInicioStr = `${fecha}`; // Usamos el string tal cual porque ya viene en formato ISO
+    const horaFinStr = `${horaFin}`; // Lo mismo aquí
 
     // Crear objetos de fecha ajustados
     const fechaInicioDate = new Date(fechaInicioStr);
     const horaFinDate = new Date(horaFinStr);
 
-    // Convertir las fechas a UTC
+    // Aquí estamos asegurándonos de que las fechas se mantengan en UTC
     const fechaInicioUTC = new Date(fechaInicioDate.getTime() + fechaInicioDate.getTimezoneOffset() * 60000);
     const horaFinUTC = new Date(horaFinDate.getTime() + horaFinDate.getTimezoneOffset() * 60000);
+
+    console.log("Fecha de Inicio (UTC):", fechaInicioUTC);
+    console.log("Hora de Fin (UTC):", horaFinUTC);
 
     try {
         const response = await fetch("/api/citas", {
@@ -112,6 +115,7 @@ export default function Citas() {
         console.error("Error en la solicitud:", error);
     }
 };
+
 
 
 
