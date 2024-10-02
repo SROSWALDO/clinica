@@ -52,17 +52,21 @@ export default function Citas() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Obtener la fecha y la hora inicial y final
+
+    // Obtener la fecha y hora inicial y final
     const { fecha, horaFin } = formData;
 
-    // Crear objetos de fecha ajustados
-    const fechaInicioDate = new Date(fecha);
-    const horaFinDate = new Date(horaFin);
+    // Combinar la fecha y la hora en un solo string
+    const fechaInicioStr = `${fecha.split("T")[0]}T${fecha.split("T")[1]}`; // Fecha de inicio en formato ISO
+    const horaFinStr = `${horaFin.split("T")[0]}T${horaFin.split("T")[1]}`; // Fecha de fin en formato ISO
 
-    // Ajustar la fecha y hora según el desplazamiento de la zona horaria local
-    const fechaInicioAjustada = new Date(fechaInicioDate.getTime() + (fechaInicioDate.getTimezoneOffset() * 60000));
-    const horaFinAjustada = new Date(horaFinDate.getTime() + (horaFinDate.getTimezoneOffset() * 60000));
+    // Crear objetos de fecha ajustados
+    const fechaInicioDate = new Date(fechaInicioStr);
+    const horaFinDate = new Date(horaFinStr);
+
+    // Convertir las fechas a UTC
+    const fechaInicioUTC = new Date(fechaInicioDate.getTime() + fechaInicioDate.getTimezoneOffset() * 60000);
+    const horaFinUTC = new Date(horaFinDate.getTime() + horaFinDate.getTimezoneOffset() * 60000);
 
     try {
         const response = await fetch("/api/citas", {
@@ -72,8 +76,8 @@ export default function Citas() {
             },
             body: JSON.stringify({
                 ...formData,
-                fecha: fechaInicioAjustada.toISOString(),
-                horaFin: horaFinAjustada.toISOString(),
+                fecha: fechaInicioUTC.toISOString(),  // Enviar fecha ajustada
+                horaFin: horaFinUTC.toISOString(),    // Enviar hora de fin ajustada
             }),
         });
 
@@ -108,6 +112,7 @@ export default function Citas() {
         console.error("Error en la solicitud:", error);
     }
 };
+
 
 
   useEffect(() => {
