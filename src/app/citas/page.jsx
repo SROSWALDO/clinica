@@ -64,9 +64,7 @@ export default function Citas() {
     const fechaInicioDate = new Date(fechaInicioStr);
     const horaFinDate = new Date(horaFinStr);
 
-    // Aquí estamos asegurándonos de que las fechas se mantengan en UTC
-    const fechaInicioUTC = new Date(fechaInicioDate.getTime() + fechaInicioDate.getTimezoneOffset() * 60000);
-    const horaFinUTC = new Date(horaFinDate.getTime() + horaFinDate.getTimezoneOffset() * 60000);
+  
 
     console.log("Fecha de Inicio (UTC):", fechaInicioUTC);
     console.log("Hora de Fin (UTC):", horaFinUTC);
@@ -79,8 +77,8 @@ export default function Citas() {
             },
             body: JSON.stringify({
                 ...formData,
-                fecha: fechaInicioUTC.toISOString(),  // Enviar fecha ajustada
-                horaFin: horaFinUTC.toISOString(),    // Enviar hora de fin ajustada
+                fecha: fechaInicioDate.toISOString(),  // Enviar fecha ajustada
+                horaFin: horaFinDate.toISOString(),    // Enviar hora de fin ajustada
             }),
         });
 
