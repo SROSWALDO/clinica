@@ -67,8 +67,8 @@ export default function Citas() {
         // Formatear la cita de la misma forma que las citas existentes
         const formattedCita = {
           title: `${newCita.paciente} - ${newCita.descripcion} - ${newCita.telefono}`,
-          start: new Date(newCita.fecha).toISOString(),
-          end: new Date(newCita.horaFin).toISOString(),
+          start: newCita.fecha,
+          end: newCita.horaFin,
           allDay: false,
         };
 
@@ -106,8 +106,8 @@ export default function Citas() {
           // Formatear las citas para el calendario
           const citasFormatted = data.map((cita) => ({
             title: `${cita.paciente} - ${cita.descripcion} - ${cita.telefono}`,
-            start:new Date(cita.fecha).toLocaleString('es-MX', { timeZone: 'America/Mexico_City' }),
-            end: new Date(cita.horaFin).toLocaleString('es-MX', { timeZone: 'America/Mexico_City' }),
+            start:cita.fecha,
+            end: cita.horaFin,
             allDay: false,
           }));
           setCitas(citasFormatted);
